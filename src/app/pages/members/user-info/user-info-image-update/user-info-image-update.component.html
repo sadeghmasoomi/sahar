@@ -1,0 +1,29 @@
+<p class="h3">ویرایش عکس</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <mat-select placeholder="موضوع عکس" [(ngModel)]="formData.UserInfoImageType">
+            <mat-option [value]="'1'">عکس پرسنلی</mat-option>
+            <mat-option [value]="'2'">کارت ملی</mat-option>
+            <mat-option [value]="'3'">شناسنامه</mat-option>
+            <mat-option [value]="'4'">کارت پایان خدمت</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div fxFlex="100"
+         fxFlex.sm="100"
+         fxFlex.xs="100"
+         fxLayout="column"
+         class="mb-12">
+        <label>عپلود عکس</label>
+        <input type="file" name="image" placeholder="بارگذاری فایل" (change)="fileProgress($event)">
+    </div>
+    <div class="text-left">
+        <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+        <button mat-raised-button class="btn-success" (click)="onSubmit()">ذخیره</button>
+    </div>
+</div>

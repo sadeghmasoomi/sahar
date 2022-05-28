@@ -1,0 +1,111 @@
+<div class="btn-group-box mt-16 mb-16 text-left">
+  <button mat-raised-button class="btn-add-success mr-16" (click)="edit(1)">افزودن</button>
+</div>
+<div *ngIf="UserEducations">
+  <div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="30" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="10">
+        <strong>#</strong>
+      </div>
+      <div fxFlex="90">
+        <strong>مقطع تحصیلات</strong>
+      </div>
+    </div>
+    <div fxFlex="70" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="50">
+        <strong>نام دانشگاه</strong>
+      </div>
+      <div fxFlex="50">
+        <strong> تاریخ پایان تحصیل</strong>
+      </div>
+      <div fxFlex="50">
+        <strong>رشته</strong>
+      </div>
+      <div fxFlex="50">
+        <strong>عملیات</strong>
+      </div>
+    </div>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let item of UserEducations; let index = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title fxFlex="30" fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="10">
+            <strong>{{index + 1}}</strong>
+          </div>
+          <div fxFlex="90">
+            {{item.EducationDegreeName}}
+          </div>
+        </mat-panel-title>
+        <mat-panel-description fxFlex="70" fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="50">
+            {{item.UniversityName}}
+          </div>
+          <div fxFlex="50">
+            {{item.EducationEndDate | dateType}}
+          </div>
+          <div fxFlex="50">
+            {{item.EducationSubject}}
+          </div>
+          <div fxFlex="50">
+            <div class="btn-group-box mt-16 mb-16 text-left">
+              <button mat-raised-button class="color-btn-click" (click)="edit(2, item)">ویرایش</button>
+              <button mat-raised-button class="color-btn-warn" (click)="delete( item)">حذف</button>            </div>
+          </div>
+
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" class="mt-12" fxLayoutAlign="start">
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>نام کشور :</strong>
+            {{item.CountryName}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong> نوع دانشگاه :</strong>
+            {{item.UnivertsityType}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="100">
+          <p>
+            <strong>یاداشت :</strong>
+            {{item.Comment}}
+          </p>
+        </div>
+        <div *ngIf="item.Attachment" class="content-member" fxFlex="100">
+          <p>
+            <strong>فایل پیوست</strong>
+          </p>
+        </div>
+
+        <div *ngIf="item.AttachmentType === 'image/jpeg' || item.AttachmentType === 'image/png'" class="mt-16" fxLayout="row wrap"
+             fxLayoutAlign="start justify"
+             fxLayoutGap="12px">
+          <mat-card fxFlex="100">
+            <mat-card-content class="pb-16">
+              <img [src]="item.Attachment" alt="Photo of a Shiba Inu">
+            </mat-card-content>
+          </mat-card>
+        </div>
+<!--        <div class="content-member" fxFlex="100" *ngIf="item.AttachmentType === 'applicatio'">-->
+<!--          <ngx-extended-pdf-viewer-->
+<!--                  [base64Src]="item.Attachment"-->
+<!--                  [height]="'90vh'"-->
+<!--                  [useBrowserLocale]="true"-->
+<!--                  [contextMenuAllowed]="false"-->
+<!--                  [showBookmarkButton]="true">-->
+<!--          </ngx-extended-pdf-viewer>-->
+<!--        </div>-->
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<mat-card *ngIf="!UserEducations">
+  <mat-card-content>
+    <div class="card-empty">
+      <p>مقداری ثبت نشده است.</p>
+    </div>
+  </mat-card-content>
+</mat-card>
