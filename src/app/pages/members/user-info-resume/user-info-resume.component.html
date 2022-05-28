@@ -1,0 +1,87 @@
+<div *ngIf="UserInfoResume">
+  <div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="10">
+        <strong>#</strong>
+      </div>
+      <div fxFlex="90">
+        <strong>عنوان شغل</strong>
+      </div>
+    </div>
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="50">
+        <strong>تاریخ شروع</strong>
+      </div>
+      <div fxFlex="50">
+        <strong>تاریخ پایان</strong>
+      </div>
+    </div>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let item of UserInfoResume; let index = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+          <div fxFlex="10">
+            <strong>{{index + 1}}</strong>
+          </div>
+          <div fxFlex="90">
+            {{item.JobName}}
+          </div>
+        </mat-panel-title>
+        <mat-panel-description fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+          <div fxFlex="50">
+            {{item.StartDate | dateType}}
+          </div>
+          <div fxFlex="50">
+            {{item.EndDate | dateType}}
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" fxLayoutAlign="start">
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>مرتبط با شغل :</strong>
+            {{item.JobRelated}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>محل کار :</strong>
+            {{item.WorkKind? 'در موسسات عضو جامعه':'سایر محلها'}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>سمت :</strong>
+            {{item.WorkSide}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>نام شرکت :</strong>
+            {{item.WorkName}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="100">
+          <p>
+            <strong>یاداشت :</strong>
+            {{item.Comment}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="100">
+          <img mat-card-image [src]="'data:image/jpg;base64,'+item.Attachment" alt="فایل پیوست">
+        </div>
+      </div>
+      <div class="btn-group-box mt-16 mb-16 text-left">
+        <button mat-raised-button class="color-btn-click mr-16" (click)="edit(item)">ویرایش</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<mat-card *ngIf="!UserInfoResume">
+  <mat-card-content>
+    <div class="card-empty">
+      <p>مقداری ثبت نشده است.</p>
+    </div>
+  </mat-card-content>
+</mat-card>

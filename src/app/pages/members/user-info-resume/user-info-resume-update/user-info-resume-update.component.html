@@ -1,0 +1,92 @@
+<p class="h3">تعریف اطلاعات کلاس</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <input matInput type="text" [(ngModel)]="formData.WorkName"  [ngModelOptions]="{standalone: true}" placeholder="نام شرکت" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <input matInput type="text" [(ngModel)]="formData.JobName"  [ngModelOptions]="{standalone: true}" placeholder="انوان شغل" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <input matInput type="text" [(ngModel)]="formData.WorkSide"  [ngModelOptions]="{standalone: true}" placeholder="سمت" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <mat-select placeholder="محل کار" [(ngModel)]="formData.WorkKind">
+            <mat-option [value]="true">در موسسات عضو جامعه</mat-option>
+            <mat-option [value]="false">سایر محلها</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <mat-select placeholder="تاریخ شروع" [(ngModel)]="formData.GnrJobRelatedGCode">
+            <mat-option [value]="'50001'">کاملا" مرنبط</mat-option>
+            <mat-option [value]="'50002'">نيمه مرتبط</mat-option>
+            <mat-option [value]="'50003'">بدون ارتباط</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div fxFlex="50"
+         fxFlex.md="50"
+         fxFlex.sm="100"
+         fxFlex.xs="100"
+         fxLayout="column"
+         class="mb-12 mt-16 material-form-field">
+        <input name="someName" class="datepicker"  id="StartDate" [(ngModel)]="formData.StartDate"
+               (ngModelChange)="dateMode(formData.StartDate, 'StartDate')"
+               [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+        <label for="StartDate" class="material-form-field-label">تاریخ شروع</label>
+    </div>
+    <div fxFlex="50"
+         fxFlex.md="50"
+         fxFlex.sm="100"
+         fxFlex.xs="100"
+         fxLayout="column"
+         class="mb-12 mt-16 material-form-field">
+        <input name="someName" class="datepicker"  id="EndDate" [(ngModel)]="formData.EndDate"
+               (ngModelChange)="dateMode(formData.EndDate, 'EndDate')"
+               [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+        <label for="EndDate" class="material-form-field-label">تاریخ پایان</label>
+    </div>
+    <mat-form-field fxFlex="100"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <textarea matInput rows="4" [(ngModel)]="formData.Comment"  [ngModelOptions]="{standalone: true}" placeholder="یادداشت" autocomplete="off"></textarea>
+    </mat-form-field>
+    <div fxFlex="100"
+         fxFlex.sm="100"
+         fxFlex.xs="100"
+         fxLayout="column"
+         class="mb-12">
+        <label for="file" class="mb-12 pr-20">فایل پیوست</label>
+        <input id="file" type="file" name="image" placeholder="بارگذاری فایل" (change)="fileProgress($event)">
+    </div>
+</div>
+<div class="text-left">
+    <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+    <button mat-raised-button class="btn-success" (click)="onSubmit()">ذخیره</button>
+</div>
