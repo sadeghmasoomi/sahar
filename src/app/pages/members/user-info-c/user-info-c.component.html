@@ -1,0 +1,274 @@
+<div *ngIf="allUsers">
+  <div class="filters">
+    <div class="filters-content">
+      <div fxLayout="row" fxLayoutAlign="end end">
+        <div fxFlex="20">
+          <form class="form-search-filter">
+            <div class="search-wrapper search-center">
+              <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+                <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder=" جستجو با نام خانوادگی یا کد ملی ...">
+                <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="10">
+        <strong>#</strong>
+      </div>
+      <div fxFlex="90">
+        <strong>نام</strong>
+      </div>
+    </div>
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="50">
+        <strong>نام خانوادگی</strong>
+      </div>
+      <div fxFlex="50">
+        <strong>شماره ملی</strong>
+      </div>
+    </div>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let item of allUsers; let index = index" class="member-card" (opened)="ngGetData(item.Gcode)">
+      <mat-expansion-panel-header>
+        <mat-panel-title fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+          <div fxFlex="10">
+            <strong>{{((pageNumber - 1)* 50 ) + (index + 1)}}</strong>
+          </div>
+          <div fxFlex="90">
+            {{item.FirstName}}
+          </div>
+        </mat-panel-title>
+        <mat-panel-description fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+          <div fxFlex="50">
+            {{item.LastName}}
+          </div>
+          <div fxFlex="50">
+            {{item.NationalId}}
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" fxLayoutAlign="start">
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>آدرس پست الکترونیکی :</strong>
+            {{item.Email}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>آشماره تماس </strong>
+            {{item.Mobile}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>تاریخ تولد :</strong>
+            {{item.BirthDate | dateType}}
+          </p>
+        </div>
+        <div class="content-member" fxFlex="25">
+          <p>
+            <strong>جنسیت :</strong>
+            {{item.JenderName}}
+          </p>
+        </div>
+      </div>
+      <mat-tab-group>
+        <mat-tab label="اطلاعات تحصیلات کار">
+          <mat-card *ngFor="let item of UserEducations; let index = index">
+            <mat-card-content>
+              <div fxLayout="row wrap"
+                   fxLayoutAlign="start justify"
+                   fxLayoutGap="12px">
+                <div fxFlex="23" class="mb-24" fxLayoutAlign="start center">
+        <span>
+          نام کشور :
+          <strong>{{item.CountryName}}</strong>
+        </span>
+                </div>
+                <div fxFlex="23" class="mb-24" fxLayoutAlign="start center">
+        <span>
+          درجه تحصیلات :
+          <strong>{{item.EducationDegreeName}}</strong>
+        </span>
+                </div>
+                <div fxFlex="23" class="mb-24" fxLayoutAlign="start center">
+        <span>
+          تاریخ پایان تحصیل :
+          <strong>{{item.EducationEndDate | dateType}}</strong>
+        </span>
+                </div>
+                <div fxFlex="23" class="mb-24" fxLayoutAlign="start center">
+        <span>
+          موضوع آموزش :
+          <strong>{{item.EducationSubject}}</strong>
+        </span>
+                </div>
+                <div fxFlex="23" class="mb-24" fxLayoutAlign="start center">
+        <span>
+          نام دانشگاه :
+          <strong>{{item.UniversityName}}</strong>
+        </span>
+                </div>
+                <div fxFlex="23" class="mb-24" fxLayoutAlign="start center">
+        <span>
+          نوع دانشگاه :
+          <strong>{{item.UnivertsityType}}</strong>
+        </span>
+                </div>
+                <div fxFlex="100" fxLayoutAlign="start center">
+        <span>
+          یاداشت :
+          <strong>{{item.Comment}}</strong>
+        </span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="سوابق کار">
+          <div class="card-content">
+            <div class="mat-elevation-z8">
+              <table class="border-radius-8" mat-table [dataSource]="UserInfoResume">
+                <ng-container matColumnDef="JobName">
+                  <th mat-header-cell *matHeaderCellDef>نام شغل</th>
+                  <td mat-cell *matCellDef="let element"> {{element.JobName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="JobRelated">
+                  <th mat-header-cell *matHeaderCellDef>مرتبط با شغل</th>
+                  <td mat-cell *matCellDef="let element"> {{element.JobRelated}}</td>
+                </ng-container>
+                <ng-container matColumnDef="StartDate">
+                  <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+                  <td mat-cell *matCellDef="let element"> {{element.StartDate | dateType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="EndDate">
+                  <th mat-header-cell *matHeaderCellDef>تاریخ پایان</th>
+                  <td mat-cell *matCellDef="let element"> {{element.EndDate | dateType }} </td>
+                </ng-container>
+                <ng-container matColumnDef="WorkKind">
+                  <th mat-header-cell *matHeaderCellDef>محل کار</th>
+                  <td mat-cell *matCellDef="let element"> {{element.WorkKind? 'در موسسات عضو جامعه':'سایر محلها'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="WorkName">
+                  <th mat-header-cell *matHeaderCellDef>نام کار</th>
+                  <td mat-cell *matCellDef="let element"> {{element.WorkName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="WorkSide">
+                  <th mat-header-cell *matHeaderCellDef>سمت</th>
+                  <td mat-cell *matCellDef="let element"> {{element.WorkSide}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedUserInfoResume"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedUserInfoResume;"></tr>
+              </table>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="مهارت زیان کار">
+          <div class="card-content">
+            <div class="mat-elevation-z8">
+              <table class="border-radius-8" mat-table [dataSource]="UserInfoLanguage">
+                <ng-container matColumnDef="LanguageName">
+                  <th mat-header-cell *matHeaderCellDef>نام زبان</th>
+                  <td mat-cell *matCellDef="let element"> {{element.LanguageName}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Conversation">
+                  <th mat-header-cell *matHeaderCellDef>قدرت مکالمه</th>
+                  <td mat-cell *matCellDef="let element"> {{element.Conversation}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Reading">
+                  <th mat-header-cell *matHeaderCellDef>قدرت خواندن</th>
+                  <td mat-cell *matCellDef="let element"> {{element.Reading}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Translation">
+                  <th mat-header-cell *matHeaderCellDef>قدرت ترجمه</th>
+                  <td mat-cell *matCellDef="let element"> {{element.Translation }} </td>
+                </ng-container>
+                <ng-container matColumnDef="Writing">
+                  <th mat-header-cell *matHeaderCellDef>قدرت نوشتن</th>
+                  <td mat-cell *matCellDef="let element"> {{element.Writing}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedUserInfoLanguages"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedUserInfoLanguages;"></tr>
+              </table>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="تصاویر">
+          <div class="mt-16" fxLayout="row wrap"
+               fxLayoutAlign="start justify"
+               fxLayoutGap="12px">
+            <mat-card fxFlex="20" *ngFor="let item of userImage">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{item.Name}}</mat-card-title>
+              </mat-card-header>
+              <img mat-card-image [src]="item.encodePicture" alt="Photo of a Shiba Inu">
+              <mat-card-content>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-card class="mt-16" *ngIf="pageCount > 1">
+    <mat-card-content>
+      <ul class="pagination mt-3 mb-3">
+        <li class="page-item" *ngIf="pageNumber!=1"
+            (click)="pageChange(1)">
+          <a class="page-link " aria-label="Previous">
+            <span class="btn-next-pre"><i class="fas fa-angle-double-right"></i></span>
+            <span class="sr-only">اول</span>
+          </a>
+        </li>
+        <li class="page-item" *ngIf="pageNumber!=1"
+            (click)="pageChange(pageNumber-1)">
+          <mat-icon class="nav-link-icon mat-icon">keyboard_arrow_right</mat-icon>
+        </li>
+        <li class="page-item color-red-pagination" *ngIf="pageNumber && (pageNumber-3>=1)"
+            (click)="pageChange(pageNumber-3)"><a class="page-link">{{pageNumber-3}}</a>
+        </li>
+        <li class="page-item color-red-pagination" *ngIf="(pageNumber-2>=1)"
+            (click)="pageChange(pageNumber-2)"><a class="page-link">{{pageNumber-2}}</a>
+        </li>
+        <li class="page-item color-red-pagination" *ngIf="(pageNumber-1>=1)"
+            (click)="pageChange(pageNumber-1)"><a class="page-link">{{pageNumber-1}}</a>
+        </li>
+        <li class="page-item"><a class="page-link active-Item">{{pageNumber}}</a></li>
+        <li class="page-item color-red-pagination" *ngIf="(pageNumber+1)<=pageCount"
+            (click)="pageChange(pageNumber+1)"><a class="page-link">{{pageNumber+1}}</a>
+        </li>
+        <li class="page-item color-red-pagination" *ngIf="(pageNumber+2)<=pageCount"
+            (click)="pageChange(pageNumber+2)"><a class="page-link">{{pageNumber+2}}</a>
+        </li>
+        <li class="page-item color-red-pagination" *ngIf="(pageNumber+3)<=pageCount"
+            (click)="pageChange(pageNumber+3)"><a class="page-link">{{pageNumber+3}}</a>
+        </li>
+        <li class="page-item" *ngIf="(pageNumber+1<=pageCount)"
+            (click)="pageChange(pageNumber+1)">
+          <mat-icon class="nav-link-icon mat-icon">keyboard_arrow_left</mat-icon>
+        </li>
+        <li class="page-item"
+            (click)="pageChange(pageCount)">
+          <a class="page-link" aria-label="Next">
+            <span class="sr-only"> آخر</span>
+          </a>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
+<mat-card *ngIf="!allUsers">
+  <mat-card-content>
+    <div class="card-empty">
+      <p>مقداری ثبت نشده است.</p>
+    </div>
+  </mat-card-content>
+</mat-card>

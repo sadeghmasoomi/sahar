@@ -1,0 +1,52 @@
+<h3>مدیریت رتبه بندی</h3>
+<form fxLayout="row wrap"
+      fxLayoutAlign="start center" #f="ngForm" novalidate>
+  <div *ngFor="let item of forms" [fxFlex]="item.type === 'textArea'? 100 : 50">
+    <div *ngIf="item.type !== 'textArea' && !item.data && item.type !== 'date' && item.type !== 'number'" class="mb-24">
+      <mat-form-field>
+        <input matInput
+               [(ngModel)]="formData[item.enName]"
+               [ngModelOptions]="{standalone: true}"
+               type="text"
+               [placeholder]="item.faName">
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.type === 'number'" class="mb-24">
+      <mat-form-field>
+        <input matInput
+               currencyMask
+               [(ngModel)]="formData[item.enName]"
+               [name]="item.enName"
+               [disabled]="item.disable"
+               type="text"
+               [placeholder]="item.faName" >
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.data">
+      <mat-form-field>
+        <mat-select  [(ngModel)]="formData[item.enName]"  [name]="item.enName" [placeholder]="item.faName" >
+          <mat-option *ngFor="let subItem of item.data"
+                      [value]="subItem.Value">{{subItem.Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.type === 'textArea'" class="mb-24">
+      <mat-form-field>
+        <textarea matInput [(ngModel)]="formData[item.enName]"  [name]="item.enName" [placeholder]="item.faName" rows="8"></textarea>
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.type === 'date'"
+         class="mb-12 mt-16 material-form-field">
+      <input [name]="item.enName" [readOnly]="formData[item.enName] ? false : true"
+             [id]="item.enName" [(ngModel)]="formData[item.enName]"
+             (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+             [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+      <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+    </div>
+  </div>
+</form>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick(false)">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngOperationFlow(1)">افزودن</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngOperationFlow(2)">ذخیره</button>
+</div>

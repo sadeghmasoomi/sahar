@@ -1,0 +1,279 @@
+<div class="header-accordion" fxLayout="row" *ngIf="user" fxLayoutAlign="start">
+  <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>نام</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نام خوانوادگی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شماره ملی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شماره شناسنامه</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نام پدر</strong>
+    </div>
+  </div>
+  <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="90">
+      <strong>تاریخ تولد</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>پست الکترونیکی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>جنسیت </strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شماره تماس</strong>
+    </div>
+  </div>
+</div>
+<mat-accordion *ngIf="user">
+  <mat-expansion-panel class="member-card" (opened)="ngGetUserData(user.GCode)">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="50" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="50">
+          {{user.FirstName? user.FirstName: 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+          {{user.LastName? user.LastName: 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+          {{user.NationalId? user.NationalId: 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+          {{user.IdNumber? user.IdNumber: 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+          {{user.FatherName? user.FatherName: 'ثبت نشده'}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="50" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="50">
+          {{user.BirthDate? user.BirthDate : 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+          {{user.Email? user.Email : 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+          {{user.JenderName? user.JenderName : 'ثبت نشده'}}
+        </div>
+        <div fxFlex="50">
+         {{user.Mobile? user.Mobile : 'ثبت نشده'}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" class="mt-24" fxLayoutAlign="start">
+      <div fxFlex="100" class="mb-24" fxLayoutAlign="end">
+        <button mat-raised-button class="btn-add-success" (click)="edit(userDetails? 2 : 1)">{{userDetails? 'ویرایش' : 'افزودن'}}</button>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="mt-24" *ngIf="userDetails" fxLayoutAlign="start">
+      <div fxFlex="23" class="mb-24">
+        <span>
+          نام :
+          <strong>{{userDetails.LatinFirstName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          نام خانوادگی :
+          <strong>{{userDetails.LatinLastName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          نام خانوادگی قدیم :
+          <strong>{{userDetails.OldFamilyName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          نام پدر :
+          <strong>{{userDetails.FatherName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          تاریخ تولد :
+          <strong>{{userDetails.BirthJDate | dateType}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          محل تولد :
+          <strong>{{userDetails.City_Birth}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          محل صدور :
+          <strong>{{userDetails.City_Id}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          شماره شناسنامه :
+          <strong>{{userDetails.IdNumber}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+
+        <span>
+          دین :
+          <strong>{{userDetails.Religion}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          وضعیت نظام وظیفه :
+          <strong>{{userDetails.Military}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          تاریخ نظام وظیفه :
+          <strong>{{userDetails.MilitaryEndJdate | dateType}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          نام کشور :
+          <strong>{{userDetails.HomeStateName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          تنام شهر :
+          <strong>{{userDetails.HomeCityName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          کشور محل کار :
+          <strong>{{userDetails.WorkStateName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          شهر محل کار :
+          <strong>{{userDetails.WorkStateName}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          آدرس محل سکونت :
+          <strong>{{userDetails.HomeAddress}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          کد پوستی محل سکونت :
+          <strong>{{userDetails.HomeZipCode}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          شماره تماس محل سکونت :
+          <strong>{{userDetails.HomeTel}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          شماره فکس محل سکونت :
+          <strong>{{userDetails.HomeFax}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          جعبه پستی محل سکونت :
+          <strong>{{userDetails.HomePostBox}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          آدرس محل کار :
+          <strong>{{userDetails.WorkAddress}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          کد پوستی محل کار :
+          <strong>{{userDetails.WorkZipCode}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          کد پوستی محل کار :
+          <strong>{{userDetails.WorkZipCode}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          شماره تماس محل کار :
+          <strong>{{userDetails.WorkTel}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          شماره فکس محل کار :
+          <strong>{{userDetails.WorkFax}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          جعبه پستی محل کار :
+          <strong>{{userDetails.WorkPostBox}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+          تماس با پست :
+          <strong>{{userDetails.ContactPost? 'فعال':'غیر فعال'}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+            وضعیت ازدواج :
+          <strong>{{userDetails.Married}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+           شماره بیمه :
+          <strong>{{userDetails.InsuranceID}}</strong>
+        </span>
+      </div>
+      <div fxFlex="23" class="mb-24">
+        <span>
+           وضعیت بیمه :
+          <strong>{{userDetails.InsuranceKind}}</strong>
+        </span>
+      </div>
+      <div fxFlex="100" fxLayoutAlign="start center">
+        <span>
+          توضیحات :
+          <strong>{{userDetails.Description}}</strong>
+        </span>
+      </div>
+    </div>
+    <div *ngIf="userImages" class="mt-16" fxLayout="row wrap"
+         fxLayoutAlign="start justify"
+         fxLayoutGap="12px">
+      <mat-card fxFlex="20" *ngFor="let item of userImages">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{item.Name}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="item.encodePicture" alt="Photo of a Shiba Inu">
+        <mat-card-content class="pb-16">
+          <button mat-raised-button class="color-btn-click btn-fix-bottom" (click)="editImages(item)">ویرایش</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
