@@ -1,0 +1,95 @@
+<mat-card>
+  <mat-card-content>
+    <form fxLayout="row wrap"
+          fxLayoutAlign="start center">
+      <mat-form-field class="mb-24" fxFlex="25"
+                      fxFlex.md="33.33333"
+                      fxFlex.sm="41.66667%"
+                      fxFlex.xs="100"
+                      fxLayout="column">
+        <input matInput [value]="formData.Name" [disabled]="true" placeholder="نام شرکت">
+      </mat-form-field>
+      <mat-form-field class="mb-24" fxFlex="25"
+                      fxFlex.md="33.33333"
+                      fxFlex.sm="41.66667%"
+                      fxFlex.xs="100"
+                      fxLayout="column">
+        <input matInput  [value]="formData.NationalID" [disabled]="true" placeholder="کد ملی شرکت را وارد کنید">
+      </mat-form-field>
+      <mat-form-field *ngIf="formData.LastAmount" class="mb-24" fxFlex="25"
+                      fxFlex.md="33.33333"
+                      fxFlex.sm="41.66667%"
+                      fxFlex.xs="100"
+                      fxLayout="column">
+        <input matInput [value]=formData.LastAmount [disabled]="true" placeholder="اخرین مبلغ قرارداد حسابرسی">
+      </mat-form-field>
+      <mat-form-field *ngIf="formData.LastAuditor" class="mb-24" fxFlex="25"
+                      fxFlex.md="33.33333"
+                      fxFlex.sm="41.66667%"
+                      fxFlex.xs="100"
+                      fxLayout="column">
+        <input matInput  [value]=formData.LastAuditor [disabled]="true" placeholder="حسابرس اصلی">
+      </mat-form-field>
+      <div class="mb-24"
+           fxFlex="100%"
+           fxLayout="row wrap">
+        <div *ngFor="let item of formContract" fxFlex="25">
+          <div *ngIf="item.type !== 'textArea' && !item.data && item.type !== 'date' && item.type !== 'number'" class="mb-24">
+            <mat-form-field>
+              <input matInput
+                     [(ngModel)]="formData[item.enName]"
+                     [ngModelOptions]="{standalone: true}"
+                     [disabled]="item.disable"
+                     [type]="item.type"
+                     [placeholder]="item.faName">
+            </mat-form-field>
+          </div>
+          <div *ngIf="item.type === 'number'" class="mb-24">
+            <mat-form-field>
+              <input matInput
+                     currencyMask
+                     [(ngModel)]="formData[item.enName]"
+                     [ngModelOptions]="{standalone: true}"
+                     [disabled]="item.disable"
+                     type="text"
+                     [placeholder]="item.faName"   style="text-align: right !important;">
+            </mat-form-field>
+          </div>
+          <div *ngIf="item.data && item.enName !== 'UserSign2'">
+            <mat-form-field>
+              <mat-select  [(ngModel)]="formData[item.enName]"  [ngModelOptions]="{standalone: true}" [placeholder]="item.faName" [disabled]="item.disable" (selectionChange)="checkValue(item.enName, $event)">
+                <mat-option *ngFor="let subItem of item.data" [value]="subItem.GCode" [disabled]="subItem.GCode === saveValue">{{subItem.Name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div *ngIf="countMember === 2 && item.enName === 'UserSign2'" class="mb-24">
+            <mat-form-field>
+              <mat-select  [(ngModel)]="formData[item.enName]"  [ngModelOptions]="{standalone: true}" [placeholder]="item.faName" [disabled]="item.disable" (selectionChange)="checkValue(item.enName, $event)">
+                <mat-option *ngFor="let subItem of item.data" [value]="subItem.GCode" [disabled]="(subItem.GCode === saveValue)">{{subItem.Name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div *ngIf="item.type === 'textArea'" class="mb-24">
+            <mat-form-field>
+              <textarea matInput [(ngModel)]="formData[item.enName]"  [ngModelOptions]="{standalone: true}" [placeholder]="item.faName" rows="8"></textarea>
+            </mat-form-field>
+          </div>
+          <div *ngIf="item.type === 'date'"
+               class="mb-12 mt-16 material-form-field">
+            <input [name]="item.enName" class="datepicker"  [readOnly]="formData[item.enName] ? false : true" [id]="item.enName" [(ngModel)]="formData[item.enName]"
+                   (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+                   [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+            <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div fxLayout="row"
+         fxLayoutAlign="center start"
+         fxLayoutGap="12px">
+      <div fxFlex="100" fxLayoutAlign="end center">
+        <button mat-raised-button class="btn-success"  (click)="updateContract()">ذخیره</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,240 @@
+<div fxLayout="row" fxLayoutAlign="end">
+  <div fxFlex="30%">
+    <form class="form-search-filter">
+      <div class="search-wrapper search-center">
+        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+          <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با نام خانوادگی یا کد عضویت ...">
+          <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
+            <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="text-left mb-12">
+  <button mat-raised-button class="btn-add-success ml-12" (click)="operationUser()">تعریف (کارمند جدید)</button>
+  <button mat-raised-button class="btn-add-success" (click)="loginUser()">افزودن کارمند آزاد</button>
+</div>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="20" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="20">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="80">
+      <strong>نام و نام خانوادگی</strong>
+    </div>
+  </div>
+  <div fxFlex="80" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="50" class="pl-16">
+      <strong>شناسه ملی</strong>
+    </div>
+    <div fxFlex="50" class="pl-16">
+      <strong>تاریخ تولد</strong>
+    </div>
+    <div fxFlex="50" class="pl-16">
+      <strong>رده حسابرسی</strong>
+    </div>
+    <div fxFlex="50" class="pl-16">
+      <strong>وضعیت</strong>
+    </div>
+    <div fxFlex="50" class="pl-16">
+      <strong>عملیات</strong>
+    </div>
+  </div>
+</div>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of membersConnect | async; let index = index" class="member-card"
+                       (opened)="ngGetUserDetails(item)">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="20" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="20">
+          <strong>  {{index + 1}}</strong>
+        </div>
+        <div fxFlex="80">
+          {{item.FirstName + ' ' + item.LastName}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="80" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="50">
+          {{item.NationalId}}
+        </div>
+        <div fxFlex="50">
+          {{item.BirthDate | dateType}}
+        </div>
+        <div fxFlex="50">
+          {{item.UserGroupRankName}}
+        </div>
+        <div fxFlex="50">
+          {{item.UserStatus}}
+        </div>
+        <div fxFlex="50" *ngIf="item.UserStatusGCode == 1 || item.UserStatusGCode == 21">
+          <button mat-raised-button class="btn-add-success mr-16" (click)="accept(item.GCode, 11)">تایید کاربر </button>
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28">
+      <div class="mt-12" fxFlex="50">
+        <p>
+          <strong>گروه کاربر :</strong>
+          {{item.UserGroupName}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="50">
+        <p>
+          <strong>آدرس پست الکترونیکی :</strong>
+          {{item.Email}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>نام پدر :</strong>
+          {{item.FatherName}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>شماره شناسنامه :</strong>
+          {{item.IdNumber}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>جنسیت :</strong>
+          {{item.JenderName}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>شماره تماس :</strong>
+          {{item.Mobile}}
+        </p>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28">
+      <div class="mt-12" fxFlex="25">
+        <p class="h3">ورود و خروج</p>
+      </div>
+      <div class="mt-12" fxFlex="100">
+        <table style="overflow: auto" class="border-radius-8 text-center" mat-table [dataSource]="item.Details">
+          <ng-container class="text-center" matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              {{i + 1}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StartJdate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+            <td mat-cell *matCellDef="let element">
+              <span>{{element.StartJdate | dateType}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="EndJDate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ پایان</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.EndJdate">{{element.EndJdate | dateType}}</span>
+              <span *ngIf="!element.EndJdate"></span>
+              <div class="mb-12 mt-16 material-form-field" *ngIf="!element.EndJdate && editActive">
+                <input name="someName" class="datepicker" id="EndJdate"
+                       [(ngModel)]="EndJdate"
+                       [dpDayPicker]="datePickerConfig"
+                       [ngModelOptions]="{standalone: true}"
+                       (ngModelChange)="dateMode(EndJdate)"
+                       theme="dp-material" required="" autocomplete="off">
+                <label for="EndJdate" class="material-form-field-label">تاریخ پایان</label>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="FirmName">
+            <th mat-header-cell *matHeaderCellDef>نام موسسه حسابرسی</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.FirmName && element.FirmName!==''? element.FirmName: ''}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="Dsc">
+            <th mat-header-cell *matHeaderCellDef>توضیحات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.Dsc}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StatusName">
+            <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.StatusName}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="operasion">
+            <th mat-header-cell *matHeaderCellDef>عملیات</th>
+            <td mat-cell *matCellDef="let element; let index = index" class="text-center">
+              <button mat-raised-button class="btn-add-success mr-16" *ngIf="editActive"
+                      (click)="logOutInCompany(element, item)">تایید</button>
+              <button mat-raised-button class="color-btn-warn mr-16" *ngIf="!element.EndJdate"
+                      (click)="editActive = !editActive">{{editActive ? 'بازگشت' : ' خروج کارمند'}}</button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay , sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28">
+      <div class="mt-12" fxFlex="25">
+        <p class="h3">رتبه بندی</p>
+      </div>
+      <div  fxFlex="100" fxLayoutAlign="end">
+        <button mat-raised-button class="color-btn-click" (click)="operationFlow(item)">افزودن رتبه کاربر</button>
+      </div>
+      <div class="mt-12" fxFlex="100">
+        <table style="overflow: auto" class="border-radius-8 text-center" mat-table [dataSource]="item.Flow">
+          <ng-container class="text-center" matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              {{i + 1}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="UserGroupRankGCode">
+            <th mat-header-cell *matHeaderCellDef>رده حسابرسی</th>
+            <td mat-cell *matCellDef="let element">
+              <span>{{element.UserGroupRankName}}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="StartJdate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.StartJdate | dateType}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="Dsc">
+            <th mat-header-cell *matHeaderCellDef>توضیحات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.Dsc}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StatusGcode">
+            <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.StatusName}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="operasion">
+            <th mat-header-cell *matHeaderCellDef>عملیات</th>
+            <td mat-cell *matCellDef="let element; let index = index" class="text-center">
+              <button mat-raised-button class="btn-add-success mr-16" *ngIf="element.StatusGcode == 1 || element.StatusGcode == 21" (click)="acceptFlow(element.GCode, item, 12)">ارسال به جامعه</button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayFlow , sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplayFlow;"></tr>
+        </table>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="end" class="pt-28">
+      <button mat-raised-button class="btn-success" (click)="operationUser(item)">ویرایش</button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  class="mt-12"
+  showFirstLastButtons
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 30, 40, 50, 60, 70, 80, 90, 100]">
+</mat-paginator>
