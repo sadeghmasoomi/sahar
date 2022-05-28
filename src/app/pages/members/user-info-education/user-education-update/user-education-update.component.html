@@ -1,0 +1,100 @@
+<p class="h3">تعریف اطلاعات کلاس</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <mat-select placeholder="کشور" [(ngModel)]="formData.GnrCountryGCode">
+            <mat-option [value]="100001">ایران</mat-option>
+            <mat-option [value]="100002">عراق</mat-option>
+            <mat-option [value]="100003">آلمان</mat-option>
+            <mat-option [value]="100004">عمان</mat-option>
+            <mat-option [value]="100005">آمریکا</mat-option>
+            <mat-option [value]="100006">هنگ کنگ</mat-option>
+            <mat-option [value]="100007">امارات</mat-option>
+            <mat-option [value]="100008">قزلقستان</mat-option>
+            <mat-option [value]="100009">سوئیس</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <mat-select placeholder="مقطع تحصیلات" [(ngModel)]="formData.GnrEducationDegreeGCode">
+            <mat-option [value]="70001">زیر دیپلم</mat-option>
+            <mat-option [value]="70002">دیپلم</mat-option>
+            <mat-option [value]="70003">فوق دیپلم</mat-option>
+            <mat-option [value]="70004">لیسانس</mat-option>
+            <mat-option [value]="70005">فوق لیسانس</mat-option>
+            <mat-option [value]="70006">دکترای حرفه ای - DBA</mat-option>
+            <mat-option [value]="70007">دکترا PHD</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <mat-select placeholder="نوع دانشگاه" [(ngModel)]="formData.GnrUnivertsityTypeGCode">
+            <mat-option [value]="250003">آزاد</mat-option>
+            <mat-option [value]="250002">غیر انتفاعی</mat-option>
+            <mat-option [value]="250004">پیام نور</mat-option>
+            <mat-option [value]="250005">علمی کاربردی</mat-option>
+            <mat-option [value]="250006">خارجی</mat-option>
+            <mat-option [value]="250007">مشترک داخلی و خارجی</mat-option>
+            <mat-option [value]="259999">سایر</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <input matInput type="text" [(ngModel)]="formData.UniversityName"  [ngModelOptions]="{standalone: true}" placeholder="نام دانشگاه" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field fxFlex="50"
+                    fxFlex.md="50"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <input matInput type="text" [(ngModel)]="formData.EducationSubject"  [ngModelOptions]="{standalone: true}" placeholder="رشته تحصیلی" autocomplete="off">
+    </mat-form-field>
+    <div fxFlex="50"
+         fxFlex.md="50"
+         fxFlex.sm="100"
+         fxFlex.xs="100"
+         fxLayout="column"
+         class="mb-12 mt-16 material-form-field">
+        <input name="someName" class="datepicker"  id="RegisterDateStart" [(ngModel)]="formData.EducationEndDate"
+               (ngModelChange)="dateMode(formData.EducationEndDate, 'EducationEndDate')"
+               [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+        <label for="RegisterDateStart" class="material-form-field-label">تاریخ اتمام تحصیل</label>
+    </div>
+    <mat-form-field fxFlex="100"
+                    fxFlex.sm="100"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    class="mb-12">
+        <textarea matInput rows="4" [(ngModel)]="formData.Comment"  [ngModelOptions]="{standalone: true}" placeholder="یادداشت" autocomplete="off"></textarea>
+    </mat-form-field>
+    <div fxFlex="100"
+         fxFlex.sm="100"
+         fxFlex.xs="100"
+         fxLayout="column"
+         class="mb-12">
+        <label for="file" class="mb-12 pr-20">فایل پیوست</label>
+        <input id="file" type="file" name="image" placeholder="بارگذاری فایل" (change)="fileProgress($event)">
+    </div>
+</div>
+<div class="text-left">
+    <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+    <button mat-raised-button class="btn-success" (click)="onSubmit()">ذخیره</button>
+</div>

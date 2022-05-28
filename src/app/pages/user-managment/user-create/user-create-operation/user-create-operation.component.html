@@ -1,0 +1,96 @@
+<p class="h3 mb-12">اضافه نمودن شخص جدید (با استفاده از سرویس ثبت احوال)</p>
+<div fxLayout="row wrap" class="mb-12" fxLayoutGap="15px">
+  <div fxFlex="40%">
+    <form class="form-search-filter">
+      <div class="search-wrapper">
+        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+          <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}"  placeholder="جستجوی کاربر با شناسه ملی ...">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div fxFlex="40%">
+    <form class="form-search-filter">
+      <div class="search search-brthdate" fxFlex="" fxLayout="row">
+        <input name="BirthDate"
+               id="BirthDate" [(ngModel)]="BirthDate"
+               (ngModelChange)="dateModeAlon(BirthDate, 'BirthDate')"
+               [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+        <label *ngIf="!BirthDate" for="BirthDate" class="material-form-field-label material-field-brthdate">تاریخ تولد</label>
+      </div>
+    </form>
+</div>
+  <div fxFlex="10%">
+    <button mat-raised-button class="btn-success" (click)="ngSearch(name, BirthDate)">جستجو</button>
+  </div>
+</div>
+<div *ngIf="numberForm === 1">
+  <form fxLayout="row wrap"
+        fxLayoutAlign="start center" #f="ngForm" novalidate>
+    <div *ngFor="let item of forms" fxFlex="50">
+      <div *ngIf="item.type !== 'textArea' && !item.data && item.type !== 'date' && item.type !== 'number'" class="mb-24">
+        <mat-form-field>
+          <input matInput
+                 [(ngModel)]="formData[item.enName]"
+                 [ngModelOptions]="{standalone: true}"
+                 [disabled]="item.disabled"
+                 type="text"
+                 [placeholder]="item.faName">
+        </mat-form-field>
+      </div>
+      <div *ngIf="item.type === 'number'" class="mb-24">
+        <mat-form-field>
+          <input matInput
+                 currencyMask
+                 [(ngModel)]="formData[item.enName]"
+                 [name]="item.enName"
+                 [disabled]="item.disabled"
+                 type="text"
+                 [placeholder]="item.faName" >
+        </mat-form-field>
+      </div>
+      <div *ngIf="item.data">
+        <mat-form-field>
+          <mat-select  [(ngModel)]="formData[item.enName]"
+                       [name]="item.enName" [placeholder]="item.faName"  [disabled]="item.disabled">
+            <mat-option *ngFor="let subItem of item.data"
+                        [fxHide]="item.enName === 'UserGroupRankGCode' && formData.UserGroupGCode !== subItem.parent"
+                        [value]="subItem.Value">{{subItem.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="item.type === 'textArea'" class="mb-24">
+        <mat-form-field>
+          <textarea matInput [(ngModel)]="formData[item.enName]"  [name]="item.enName" [placeholder]="item.faName" rows="8"></textarea>
+        </mat-form-field>
+      </div>
+      <div *ngIf="item.type === 'date'"
+           class="mb-12 mt-16 material-form-field">
+        <input [name]="item.enName" [readOnly]="formData[item.enName] ? false : true"
+               [id]="item.enName" [(ngModel)]="formData[item.enName]"
+               (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+               [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+        <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="numberForm === 2">
+  <form fxLayout="row wrap"
+        fxLayoutAlign="start center">
+    <mat-form-field class="mb-24" fxFlex="50"
+                    fxLayout="column">
+      <input matInput [value]="formData.FirstName" [disabled]="true" placeholder="نام">
+    </mat-form-field>
+    <mat-form-field  class="mb-24" fxFlex="50"
+                    fxLayout="column">
+      <input matInput [value]="formData.LastName" [disabled]="true" placeholder="نام خانوادگی">
+    </mat-form-field>
+  </form>
+</div>
+<div *ngIf="numberForm === 1" class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick(false)">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngOperationUsers(1)">افزودن</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngOperationUsers(2)">ذخیره</button>
+</div>
+
