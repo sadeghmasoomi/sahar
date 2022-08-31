@@ -1,28 +1,15 @@
-
-  <!-- <div style="margin: top 10%">
-    <form class="form-search-filter-dialog" >
-      <div class="search-wrapper search-center">
-        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
-          <input matInput (keyup)="applyFilter($event)" placeholder="جستجو ...">
-        </div>
+<div>
+  <form class="form-search-filter" fxFlex="row">
+    <div class="search-wrapper search-center" style="position: relative">
+      <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+        <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو...">
+        <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
+          <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+        </button>
       </div>
-    </form>
-  </div> -->
-
-
-
-  <div>
-    <form class="form-search-filter" fxFlex="row">
-      <div class="search-wrapper search-center" style="position: relative">
-        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
-          <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با شناسه و نام شرکت...">
-          <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
-            <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
+    </div>
+  </form>
+</div>
 
 <div class="mb-12">
   <button mat-raised-button class="ml-12" (click)="filterCompany(1)" [class]="index === 1? 'color-btn-primary-300':'color-btn-click'">ارسالی توسط موسسه</button>

@@ -65,7 +65,6 @@ export class AuditorIncomControlComponent {
           (values: any) => values.StatusGCode > 0 && values.StatusGCode === 20
         )
       );
-      // values.StatusGCode > 0 && values.StatusGCode === 20
       this.incomeData.paginator = this.paginator;
       this.data = this.incomeData.connect();
     });
@@ -229,22 +228,14 @@ export class AuditorIncomControlComponent {
     name = name.trim(); // Remove whitespace
     name = name.toLowerCase(); // Datasource defaults to lowercase matches
     this.incomeData.filter = name;
-    console.log('name===>', name);
-  }
-
-  // =====================================================
-  // فیلتر جدول
-  applyFilter(event: Event): any {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.incomeData.filter = filterValue.trim().toLowerCase();
-    this.filterData = filterValue;
   }
 
   sortData(sort: Sort): void {
+    const filter = this.incomeData.filter;
     const data = this.incomeData.data.slice();
-
     if (!sort.active || sort.direction === '') {
       this.incomeData = new MatTableDataSource<any>(data);
+      this.incomeData.filter = filter;
       return;
     }
 
@@ -270,6 +261,7 @@ export class AuditorIncomControlComponent {
       })
     );
     this.incomeData.paginator = this.paginator;
+    this.incomeData.filter = filter;
     this.data = this.incomeData.connect();
   }
 }
