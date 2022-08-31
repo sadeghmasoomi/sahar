@@ -1,0 +1,16 @@
+$breakpoints: (
+  'sm': 599px,
+  'md': 959px,
+  'lg': 1279px,
+  'xl':1919px,
+)!default;
+
+@mixin screen($breakpoint){
+  @if(map-has_key($breakpoints, $breakpoint)){
+    @media (max-width:  map_get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }@else {
+    @warn "hello worning";
+  }
+}

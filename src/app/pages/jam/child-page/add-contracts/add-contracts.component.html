@@ -1,0 +1,133 @@
+<div class="pb-24 h3">ترازنامه
+  <small>(ارقام به میلیون ریال)</small>
+</div>
+<div fxLayout="row"
+     fxLayoutAlign="center start"
+     fxLayoutGap="12px">
+  <div fxFlex="100"
+       fxLayout="column"
+       fxLayoutAlign="center start"
+       fxLayoutGap="12px" *ngFor="let item of description">
+    <mat-card class="card-color-white-blue w-100-percentage mb-12" fxLayout="column"
+              fxLayoutAlign="center start"
+              fxLayoutGap="12px">
+      <mat-card-header class="w-100-percentage" fxFlex="100" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="12px">
+        <mat-card-title fxFlex="33" fxLayoutAlign="center center" class="h4 header-title"><span *ngIf="item.Header">{{item.Header}}</span></mat-card-title>
+        <mat-card-title fxFlex="33" dir=ltr fxLayoutAlign="center center" class="h4 mb-0 header-title">{{newDate}}</mat-card-title>
+        <mat-card-title fxFlex="33" dir=ltr fxLayoutAlign="center center" class="h4 mb-0 header-title">{{lastDate}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    <div class="w-100-percentage mb-12" fxLayout="column"
+         fxLayoutAlign="center start"
+         fxLayoutGap="12px"
+         *ngFor="let subItem of item.Titles">
+      <mat-card class="w-100-percentage">
+        <mat-card-header>
+          <mat-card-title class="h4 header-title mb-24">{{subItem.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="field" [ngClass]="{'active': sub.bold}" *ngFor="let sub of subItem.subTitle">
+            <div fxFlex="40" fxLayout="row wrap">
+              <p>{{sub.faName}} :</p>
+            </div>
+            <div fxFlex="60%" fxLayout="row wrap" fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(formsData[sub.enName])}">{{formsData[sub.enName] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(formsDataTwe[sub.enName])}">{{formsDataTwe[sub.enName] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="center start"
+     fxLayoutGap="12px">
+  <div fxFlex="40" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div class="grid-box" fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <div class="field active">
+            <div fxFlex="40" fxLayout="row wrap">
+              <p>جمع دارایی ها :</p>
+            </div>
+            <div fxFlex="60%" fxLayout="row wrap" fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(sums[0])}">{{sums[0] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(sums2[0])}">{{sums2[0] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div fxFlex="40"  fxLayout="row wrap" fxLayoutAlign="center start">
+    <div class="grid-box" fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <div class="field active">
+            <div fxFlex="40" fxLayout="row wrap">
+              <p> جمع بدهی ها و حقوق صاحبان سهام :</p>
+            </div>
+            <div fxFlex="60%" fxLayout="row wrap" fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(sums[1])}">{{sums[1] | negToPosSahar}}</p>
+                </div>
+              </div>
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(sums2[1])}">{{sums2[1] | negToPosSahar}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="center start"
+     fxLayoutGap="12px">
+  <div fxFlex="40" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div class="grid-box" fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <div class="field active">
+            <div fxFlex="40" fxLayout="row wrap">
+              <p>اختلاف  :</p>
+            </div>
+            <div fxFlex="60%" fxLayout="row wrap" fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(sums[0])}">{{sums[0] - sums[1] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" [ngClass]="{'setPerens' : isNegitive(sums2[0])}">{{sums2[0] - sums2[1] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

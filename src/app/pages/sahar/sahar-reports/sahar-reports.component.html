@@ -1,0 +1,87 @@
+<form class="form-search-filter">
+  <div class="search-wrapper search-center">
+    <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+      <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با شناسه و نام شرکت...">
+      <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+    </div>
+  </div>
+</form>
+<div class="mb-12">
+  <button mat-raised-button class="ml-12" (click)="filterCompany(4)" [class]="index === 4? 'color-btn-primary-300':'color-btn-click'">قرارداد های بدون گزارش</button>
+  <button mat-raised-button class="ml-12" (click)="filterCompany(1)" [class]="index === 1? 'color-btn-primary-300':'color-btn-click'">گزارش های درجریان</button>
+  <button mat-raised-button class="ml-12" (click)="filterCompany(2)" [class]="index === 2? 'color-btn-primary-300':'color-btn-click'">گزارش های تایید نشده</button>
+  <button mat-raised-button class="ml-12" (click)="filterCompany(3)" [class]="index === 3? 'color-btn-primary-300':'color-btn-click'">گزارش های تایید شده</button>
+  <button mat-raised-button class="ml-12 color-btn-primary-800" (click)="exportExcel()">دانلود لیست به اکسل</button>
+
+</div>
+<div *ngIf="active && reportContract.length > 0">
+  <div class="card-content">
+    <div class="mat-elevation-z8 table-font-small">
+      <table class="border-radius-8" mat-table [dataSource]="reportContractData">
+        <ng-container matColumnDef="row">
+          <th mat-header-cell *matHeaderCellDef>ردیف</th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef>نام شرکت</th>
+          <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="NationalId">
+          <th mat-header-cell *matHeaderCellDef>شناسه ملی</th>
+          <td mat-cell *matCellDef="let element"> {{element.NationalId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="DurationDateStart">
+          <th mat-header-cell *matHeaderCellDef>شروع سال مالی</th>
+          <td mat-cell *matCellDef="let element"> {{element.DurationDateStart | dateType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="DurationDateEnd">
+          <th mat-header-cell *matHeaderCellDef>پایان سالی مالی</th>
+          <td mat-cell *matCellDef="let element"> {{element.DurationDateEnd | dateType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="TreatyDate">
+          <th mat-header-cell *matHeaderCellDef>تاریخ قرارداد</th>
+          <td mat-cell *matCellDef="let element"> {{element.TreatyDate | dateType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="SignDate">
+          <th mat-header-cell *matHeaderCellDef>تاریخ تایید مدیر</th>
+          <td mat-cell *matCellDef="let element"> {{element.SignDate | dateType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="SendDate">
+          <th mat-header-cell *matHeaderCellDef>تاریخ ارسال به جامعه</th>
+          <td mat-cell *matCellDef="let element"> {{element.SendDate | dateType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="TreatyNo">
+          <th mat-header-cell *matHeaderCellDef>شماره قرارداد</th>
+          <td mat-cell *matCellDef="let element"> {{element.TreatyNo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ActivityName">
+          <th mat-header-cell *matHeaderCellDef>نوع قرارداد</th>
+          <td mat-cell *matCellDef="let element"> {{element.ActivityName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="StatusName">
+          <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+          <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="operation">
+          <th mat-header-cell *matHeaderCellDef> عملیات </th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <button mat-raised-button class="ml-12" [ngClass]="element.StatusName ? 'color-btn-primary-800' : 'btn-add-success'"  [routerLink]="['/Sahar/contract', element.GCode]"> {{element.StatusName=== "" ? 'افزودن گزارش' : 'اطلاعات گزارش'}} </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="reportContract && reportContract.length">
+  <mat-paginator
+    *ngIf="reportContract.length"
+    showFirstLastButtons
+    [pageSize]="20"
+    [pageSizeOptions]="[20, 30, 40]">
+  </mat-paginator>
+  <div *ngIf="active && reportContract.length == 0">
+    <p class="empty-text">موردی برای مشاهده وجود ندارد</p>
+  </div>
+</div>

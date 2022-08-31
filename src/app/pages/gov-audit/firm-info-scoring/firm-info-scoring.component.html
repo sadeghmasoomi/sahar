@@ -1,0 +1,75 @@
+<form class="form-search-filter">
+  <div class="search-wrapper search-center">
+    <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+      <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با شناسه و نام شرکت...">
+      <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+    </div>
+  </div>
+</form>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="10">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="90">
+      <strong>نام شرکت</strong>
+    </div>
+  </div>
+  <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>شناسه ملی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>کد موسسه </strong>
+    </div>
+  </div>
+</div>
+<div class="card-content">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let item of allGovAudit; let i = index" (opened)="ngGetData(item.GCode)">
+      <mat-expansion-panel-header>
+        <mat-panel-title fxFlex="50" fxLayout="row" fxLayoutAlign="end center">
+          <div fxFlex="10">
+            <strong>{{((pageNumber - 1)* 20 ) + (i + 1)}}</strong>
+          </div>
+          <div fxFlex="90">
+            {{item.Name}}
+          </div>
+        </mat-panel-title>
+        <mat-panel-description fxFlex="50" fxLayout="row"  fxLayoutAlign="center center">
+          <div fxFlex="50">
+            {{item.NationalID}}
+          </div>
+          <div fxFlex="50">
+            {{item.Code}}
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" class="mt-24 mb-24" *ngFor="let sub of item.dataValue">
+        <mat-form-field fxFlex="33.33333">
+          <input matInput type="text" placeholder="سال مالی" [(ngModel)]="sub.DurationJdate" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+        <mat-form-field fxFlex="33.33333">
+          <mat-select placeholder="ارزیابی شرکت" disabled [(ngModel)]="sub.FirmAssessmentGcode" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]="'1'">آخرین رتبه کنترل کیفیت</mat-option>
+            <mat-option [value]="'2'">شاخص ترکیب نیروی انسانی</mat-option>
+            <mat-option [value]="'3'">شاخص ظرفیت</mat-option>
+            <mat-option [value]="'4'">آرای انتظامی</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="33.33333">
+          <input matInput [(ngModel)]="sub.Score" placeholder="امتیاز" (ngModelChange)="sumScore()">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="end center" class="mt-24 mb-24">
+        <mat-form-field fxFlex="33.33333">
+          <input matInput [(ngModel)]="sum" placeholder="مجموع امتیازات" disabled>
+        </mat-form-field>
+      </div>
+      <div class="text-left">
+        <button mat-raised-button  class="btn-success"  (click)="add()">ذخیره</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<app-pagination [dataPage]="govAudit" [pageNumberValue]="params.get('pageNumber')? params.get('pageNumber'): 1" urlRouter="GovAudit/FirmInfoScoring" [nameSearch]="params.get('nameSearch')"></app-pagination>

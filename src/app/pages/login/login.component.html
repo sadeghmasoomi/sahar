@@ -1,0 +1,36 @@
+<div class="auth" fxLayout fxLayoutAlign="center center" fxFill="10%">
+  <mat-card fxFlex.xs="70%" fxFlex.sm="50%" fxFlex.md="40%" fxFlex.lg="21.8%" fxFlex.xl="17%" fxFlex="17%">
+    <img alt="جامعه حسابداران رسمی ایران" class="logo-auth" mat-card-image src="../../../assets/images/logos/logo.png">
+    <mat-card-content fxLayout="column">
+      <form [formGroup]="loginForm" (keydown.enter)="$event.preventDefault()">
+        <mat-form-field>
+          <input matInput placeholder="نام کاربری" formControlName="username">
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">نام کاربری اجباری می باشد.</div>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="password" matInput placeholder="رمز عبور" formControlName="password">
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">رمز عبور اجباری می باشد</div>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="password" matInput placeholder="رمز عبور روزانه" formControlName="passwordTwo">
+          <button (click)="getToken()" mat-stroked-button class="get-pass">دریافت رمز دوم</button>
+          <div *ngIf="submitted && f.passwordTwo.errors" class="invalid-feedback">
+            <div *ngIf="f.passwordTwo.errors.required"> رمز دوم اجباری می باشد</div>
+          </div>
+        </mat-form-field>
+        <div fxLayout="row">
+          <a mat-stroked-button routerLink="/info" >راهنما و اطلاعات بیشتر</a>
+          <button mat-stroked-button class="btn-add-success mr-12" type="submit" (click)="login()">ورود به سیستم</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+
+

@@ -100,7 +100,7 @@ export class ViewPdfComponent implements  AfterViewInit {
         UserSign1: this.reportInfo.UserSign1,
         StatusGCode: this.reportInfo.StatusGCode,
         WorkEndDate: this.reportInfo.WorkEndDate,
-        workStartDate: this.reportInfo.workStartDate,
+        WorkStartDate: this.reportInfo.WorkStartDate,
         FinalAmount: this.reportInfo.FinalAmount,
         FinalTime: this.reportInfo.FinalTime,
       };

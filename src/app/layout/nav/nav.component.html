@@ -1,0 +1,18 @@
+<div class="nav-link-box" (click)="onItemSelected(item)"
+     [ngClass]="{'bg-active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
+  <a [routerLink]="item.route" class="nav-link"
+     [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}">
+    <mat-icon class="nav-link-icon mat-icon" role="img" aria-hidden="true">{{item.iconName}}</mat-icon>
+    <span class="nav-link-title">{{item.displayName}}</span>
+    <span fxFlex *ngIf="item.children && item.children.length">
+    <span fxFlex></span>
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+      expand_more
+    </mat-icon>
+  </span>
+  </a>
+  <div *ngIf="expanded" class="child-menu mt-16">
+    <app-nav *ngFor="let child of item.children | orderBy:'order'" [item]="child" [depth]="depth+1"></app-nav>
+  </div>
+</div>
+

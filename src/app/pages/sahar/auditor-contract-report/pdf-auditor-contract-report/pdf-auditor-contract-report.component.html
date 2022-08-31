@@ -1,0 +1,58 @@
+<div fxLayout="row" fxLayoutAlign="justify">
+    <h3 fxFlex="50">فایل آپلود شده</h3>
+    <div fxFlex="50" class="text-left" (click)="onNoClick()"> <button mat-raised-button class="color-btn-warn">بستن</button> </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28 pb-28">
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.CustomerName">
+    <p>
+      <strong>نام شرکت : </strong>
+      {{data.data.CustomerName}}
+    </p>
+  </div>
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.NationalID">
+    <p>
+      <strong>شناسه ملی : </strong>
+      {{data.data.NationalID}}
+    </p>
+  </div>
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.AuditorName">
+    <p>
+      <strong>نام حسابرس : </strong>
+      {{data.data.AuditorName}}
+    </p>
+  </div>
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.ActivityNAme">
+    <p>
+      <strong>نوع گزارش : </strong>
+      {{data.data.ActivityNAme}}
+    </p>
+  </div>
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.DurationDateEnd">
+    <p>
+      <strong>پایان سال مالی :</strong>
+      {{data.data.DurationDateEnd | dateType}}
+    </p>
+  </div>
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.SingnName1">
+    <p>
+      <strong>امضا اول :</strong>
+      {{data.data.SingnName1}}
+    </p>
+  </div>
+  <div class="mt-12" fxFlex="25" *ngIf="data.data.SingnName2">
+    <p>
+      <strong>امضا دوم :</strong>
+      {{data.data.SingnName2}}
+    </p>
+  </div>
+</div>
+<div *ngIf="data">
+    <ngx-extended-pdf-viewer
+      [src]="pdfFile"
+      height="80vh"
+      [useBrowserLocale]="true">
+    </ngx-extended-pdf-viewer>
+</div>
+<div *ngIf="!data">
+    <p class="empty-text">موردی برای مشاهده وجود ندارد</p>
+</div>

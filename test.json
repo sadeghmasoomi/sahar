@@ -1,0 +1,32 @@
+[
+  {
+    "GnrListGcode": false,
+    "enName": "گروه حسابرسی",
+    "faName": "نام",
+    "type": "text"
+  },
+  {
+    "GnrListGcode": false,
+    "enName": "UserGroupRankGCode",
+    "faName": "رده حسابرسی",
+    "type": "text"
+  },
+  {
+    "GnrListGcode": false,
+    "enName": "StartJdate",
+    "faName": "تاریخ شروع",
+    "type": "date"
+  },
+  {
+    "GnrListGcode": false,
+    "enName": "StatusGcode",
+    "faName": "وضعیت",
+    "data": []
+  },
+  {
+    "GnrListGcode": false,
+    "enName": "Dec",
+    "faName": "توضیحات",
+    "type": "textArea"
+  }
+]

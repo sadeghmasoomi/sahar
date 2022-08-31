@@ -1,0 +1,388 @@
+<div class="filters">
+  <div class="filters-content">
+    <div fxLayout="row" fxLayoutAlign="end end">
+      <div fxFlex="20">
+        <form class="form-search-filter">
+          <div class="search-wrapper search-center">
+            <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+              <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با نام دوره ...">
+              <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="10">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="90">
+      <strong>نام دوره</strong>
+    </div>
+  </div>
+  <div fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>کد دوره</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نوع دوره</strong>
+    </div>
+  </div>
+</div>
+<div class="text-left mb-12">
+  <button mat-raised-button class="btn-success" (click)="ngModalAdd()">تعریف اطلاعات دوره</button>
+</div>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of courses; let index = index" class="member-card" (opened)="ngGetCoursesData(item.Gcode)">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="10">
+          <strong>{{((pageNumber - 1)* 50 ) + (index + 1)}}</strong>
+        </div>
+        <div fxFlex="90">
+          {{item.CouseName}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="50" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="50">
+          {{item.Code}}
+        </div>
+        <div fxFlex="50">
+          {{item.TypeName}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start">
+      <div fxFlex="100">
+        <div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+          <div fxFlex="20" fxLayout="row" fxLayoutAlign="start">
+            <div fxFlex="10" fxLayoutAlign="center center">
+              <strong>ردیف</strong>
+            </div>
+            <div fxFlex="90" fxLayoutAlign="center center">
+              <strong>تاریخ شروع دوره</strong>
+            </div>
+          </div>
+          <div fxFlex="80" fxLayout="row" fxLayoutAlign="start">
+            <div fxFlex="33.3333" fxLayoutAlign="center center">
+              <strong>کل ساعت درس</strong>
+            </div>
+            <div fxFlex="33.3333" fxLayoutAlign="center center">
+              <strong>تعداد دانشجو</strong>
+            </div>
+            <div fxFlex="33.3333" fxLayoutAlign="center center">
+              <button mat-raised-button class="btn-success" (click)="ngModalAddProgram(item.Gcode)">تعریف اطلاعات کلاس</button>
+              <div class="btn-group-box">
+                <button mat-raised-button class="color-btn-click mr-16" (click)="ngModalEdit(item)">ویرایش</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let sub of coursesP; let index = index" class="member-card" (opened)="ngGetProgramAccess(sub.Gcode)">
+            <mat-expansion-panel-header>
+              <mat-panel-title fxFlex="20" fxLayout="row" fxLayoutAlign="center center">
+                <div fxFlex="10">
+                  <strong>{{((pageNumber - 1)* 50 ) + (index + 1)}}</strong>
+                </div>
+                <div fxFlex="90" class="text-center">
+                  {{sub.CourseStart | dateType}}
+                </div>
+              </mat-panel-title>
+              <mat-panel-description fxFlex="80" fxLayout="row"  fxLayoutAlign="center center">
+                <div fxFlex="33.3333">
+                  {{sub.TotalHours}}
+                </div>
+                <div fxFlex="33.3333">
+                  {{sub.Qty}}
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout="row wrap" fxLayoutAlign="start">
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>تاریخ شروع ثبت نام :</strong>
+                  {{sub.RegisterDateStart | dateType}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>تاریخ خاتمه ثبت نام :</strong>
+                  {{sub.RegisteDateEnd | dateType}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>تاریخ خاتمه دوره :</strong>
+                  {{sub.CourseEnd | dateType}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>تاریخ شروع دریافت کارت :</strong>
+                  {{sub.CartStart | dateType}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>تاریخ خاتمه دریافت کارت :</strong>
+                  {{sub.CartEnd | dateType}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>زمانبندی برنامه درسی :</strong>
+                  {{sub.TimeProgram}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>وضعیت :</strong>
+                  {{sub.StatusName}}
+                </p>
+              </div>
+              <div class="content-member" fxFlex="25">
+                <p>
+                  <strong>نام مدرس :</strong>
+                  {{sub.TeacherName}}
+                </p>
+              </div>
+              <div fxFlex="100">
+                <div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+                  <div fxFlex="20" fxLayout="row" fxLayoutAlign="start">
+                    <div fxFlex="10" fxLayoutAlign="center center">
+                      <strong>ردیف</strong>
+                    </div>
+                    <div fxFlex="90" fxLayoutAlign="center center">
+                      <strong>گروه کاربر</strong>
+                    </div>
+                  </div>
+                  <div fxFlex="80" fxLayout="row" fxLayoutAlign="start">
+                    <div fxFlex="33.3333" fxLayoutAlign="center center">
+                      <strong>امتیاز دوره</strong>
+                    </div>
+                    <div fxFlex="33.3333" fxLayoutAlign="center center">
+                      <strong>شناسه پرداخت</strong>
+                    </div>
+                    <div fxFlex="33.3333" fxLayoutAlign="center center">
+                      <button mat-raised-button class="btn-success" (click)="ngModalAddTrainProgram(sub.Gcode)">تعریف شرکت کننده</button>
+                      <div class="btn-group-box">
+                        <button mat-raised-button class="color-btn-primary-400 mr-16" (click)="ngModalAddProgramEdit(sub, item.Gcode)">ویرایش</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-accordion>
+                  <mat-expansion-panel *ngFor="let program of programAccess; let index = index" class="member-card" (opened)=" this.ngGetInstallment(program.Gcode)">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title fxFlex="20" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="10">
+                          <strong>{{((pageNumber - 1)* 50 ) + (index + 1)}}</strong>
+                        </div>
+                        <div fxFlex="90" class="text-center">
+                          {{program.NAme}}
+                        </div>
+                      </mat-panel-title>
+                      <mat-panel-description fxFlex="80" fxLayout="row"  fxLayoutAlign="center center">
+                        <div fxFlex="33.3333">
+                          {{program.Score}}
+                        </div>
+                        <div fxFlex="33.3333">
+                          {{program.DepositID}}
+                        </div>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="row wrap" fxLayoutAlign="start">
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>اعتباری :</strong>
+                          {{program.IsCredit? 'بله' : 'خیر'}}
+                        </p>
+                      </div>
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>چند درسی :</strong>
+                          {{program.IsmanyLesson? 'بله' : 'خیر'}}
+                        </p>
+                      </div>
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>چند آدرسی :</strong>
+                          {{program.IsmanyAddress? 'بله' : 'خیر'}}
+                        </p>
+                      </div>
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>نیاز به معرفی :</strong>
+                          {{program.IsRegister? 'بله' : 'خیر'}}
+                        </p>
+                      </div>
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>قیمت :</strong>
+                          {{program.Amount | number}}
+                        </p>
+                      </div>
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>تعداد مجاز هر موسسه :</strong>
+                          {{program.MaxFirmRegister? program.MaxFirmRegister : 'ثبت نشده'}}
+                        </p>
+                      </div>
+                      <div class="content-member" fxFlex="25">
+                        <p>
+                          <strong>وضعیت :</strong>
+                          {{program.StatusName}}
+                        </p>
+                      </div>
+                      <div class="content-member mt-16 mb-16" fxFlex="100">
+                        <button mat-raised-button class="btn-success mr-16" *ngIf="program.IsCredit" (click)="ngModalAddInstallment(program.Gcode)">تعریف اقساط</button>
+                        <button mat-raised-button class="mr-16 color-btn-primary-400" (click)="ngModalEditTrainProgram(program, sub.Gcode)">ویرایش</button>
+                        <button mat-raised-button class="color-btn-click mr-16" (click)="openAddressList(program.Gcode)">آدرس ها</button>
+                        <button mat-raised-button class="color-btn-click mr-16" *ngIf="program.IsmanyLesson" (click)="openLessonList(program.Gcode)">درس ها</button>
+                      </div>
+                      <div fxFlex="100">
+                        <div *ngIf="!programAccess">
+                          <p class="empty-text">شرکت کننده ثبت نشده است.</p>
+                        </div>
+                      </div>
+                      <div fxFlex="100" *ngIf="program.IsCredit">
+                        <mat-card>
+                          <mat-card-content>
+                            <table mat-table *ngIf="installment" [dataSource]="installment" class="mat-elevation-z8">
+                              <ng-container matColumnDef="InstallmentNumber">
+                                <th mat-header-cell *matHeaderCellDef> شماره قسط </th>
+                                <td mat-cell *matCellDef="let element"> {{element.InstallmentNumber}} </td>
+                              </ng-container>
+
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="Jdate">
+                                <th mat-header-cell *matHeaderCellDef>تایخ</th>
+                                <td mat-cell *matCellDef="let element"> {{element.JDate}} </td>
+                              </ng-container>
+
+                              <!-- Weight Column -->
+                              <ng-container matColumnDef="Amount">
+                                <th mat-header-cell *matHeaderCellDef> قیمت </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Amount}} </td>
+                              </ng-container>
+
+                              <!-- Symbol Column -->
+                              <ng-container matColumnDef="operation">
+                                <th mat-header-cell *matHeaderCellDef> عملیات </th>
+                                <td mat-cell *matCellDef="let element">
+                                  <button mat-raised-button class="color-btn-primary-400 ml-12" (click)="ngModalInitInstallment(element, program.Gcode)">ویرایش</button>
+                                </td>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <div *ngIf="!installment">
+                              <p class="empty-text">قسط برای کاربر ثبت نشده است.</p>
+                            </div>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-card class="mt-16" *ngIf="pageCount > 1">
+  <mat-card-content>
+    <ul class="pagination mt-3 mb-3">
+      <li class="page-item" *ngIf="pageNumber!=1"
+          (click)="pageChange(1)">
+        <a class="page-link " aria-label="Previous">
+          <span class="btn-next-pre"><i class="fas fa-angle-double-right"></i></span>
+          <span class="sr-only">اول</span>
+        </a>
+      </li>
+      <li class="page-item" *ngIf="pageNumber!=1"
+          (click)="pageChange(pageNumber-1)">
+        <mat-icon class="nav-link-icon mat-icon">keyboard_arrow_right</mat-icon>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="pageNumber && (pageNumber-3>=1)"
+          (click)="pageChange(pageNumber-3)"><a class="page-link">{{pageNumber-3}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber-2>=1)"
+          (click)="pageChange(pageNumber-2)"><a class="page-link">{{pageNumber-2}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber-1>=1)"
+          (click)="pageChange(pageNumber-1)"><a class="page-link">{{pageNumber-1}}</a>
+      </li>
+      <li class="page-item"><a class="page-link active-Item">{{pageNumber}}</a></li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber+1)<=pageCount"
+          (click)="pageChange(pageNumber+1)"><a class="page-link">{{pageNumber+1}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber+2)<=pageCount"
+          (click)="pageChange(pageNumber+2)"><a class="page-link">{{pageNumber+2}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber+3)<=pageCount"
+          (click)="pageChange(pageNumber+3)"><a class="page-link">{{pageNumber+3}}</a>
+      </li>
+      <li class="page-item" *ngIf="(pageNumber+1<=pageCount)"
+          (click)="pageChange(pageNumber+1)">
+        <mat-icon class="nav-link-icon mat-icon">keyboard_arrow_left</mat-icon>
+      </li>
+      <li class="page-item"
+          (click)="pageChange(pageCount)">
+        <a class="page-link" aria-label="Next">
+          <span class="sr-only"> آخر</span>
+        </a>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
+<div class='flx-grid'>
+  <div class="col-flx">
+    <div class="images-avatar"><img src="https://iraniansss.com/wp-content/uploads/2021/01/دکتر-علی-اکبر-مازار.jpg" /></div>
+    <div class="title">
+      <h5>دکتر علی اکبر مازار</h5>
+      رئیس هیئت مدیره
+      <a class="more-link" href="">نمایش رزومه</a>
+    </div>
+  </div>
+  <div class="col-flx">
+    <div class="images-avatar"><img src=""/></div>
+    <div class="title">
+      <h5>دکتر مهدی رضوی</h5>
+        نایب رئیس هیئت مدیره
+      <a class="more-link" href="">نمایش رزومه</a>
+    </div>
+  </div>
+  <div class="col-flx">
+    <div class="images-avatar"><img src="https://iraniansss.com/wp-content/uploads/2021/01/دکتر-ابراهیم-تیموری.jpg" /></div>
+    <div class="title">
+      <h5>دکتر ابراهیم تیموری</h5>
+      خزانه دار
+      <a class="more-link" href="" target="_blank">نمایش رزومه</a>
+    </div>
+  </div>
+  <div class="col-flx">
+    <div class="images-avatar"><img /></div>
+    <div class="title">
+      <h5>دکتر رضا رمضانی خورشید دوست</h5>
+      عوض هیئت مدیره
+      <a class="more-link" href="" disabled="">نمایش رزومه</a>
+    </div>
+  </div>
+  <div class="col-flx">
+    <div class="images-avatar"><img /></div>
+    <div class="title">
+      <h5>دکتر تقی ناصر شریعتی</h5>
+      عضو هیئت مدیره
+      <a class="more-link" href="">نمایش رزومه</a>
+    </div>
+  </div>
+</div>

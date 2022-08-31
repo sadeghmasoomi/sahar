@@ -1,0 +1,48 @@
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start" *ngIf="active && reportsList.length > 0">
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="10">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="90">
+      <strong>نام شرکت</strong>
+    </div>
+  </div>
+</div>
+<mat-accordion *ngIf="active && reportsList.length > 0">
+  <mat-expansion-panel *ngFor="let item of reportsList; let index = index" class="member-card">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="100" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="10">
+          <strong>  {{index + 1}}</strong>
+        </div>
+        <div fxFlex="100">
+          {{item.Name}}
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28">
+      <div class="mb-12" fxFlex="25">
+        <button type="submit" (click)="getUpdatePDFDes(item.GCode)"   mat-raised-button class="color-btn-click ml-8">نمایش گزارش و دانلود</button>
+        <button type="submit" (click)="getUpdatePDFDes(item.GCode)"   mat-raised-button class="color-btn-click ml-8">ویرایش فایل گزارش</button>
+      </div>
+      <div
+        class="mb-24"
+        fxFlex="100"
+        fxLayout="column">
+        <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="fileProgress(pdfFile)">
+          <p>فایل خود را انتخاب کنید</p>
+          <input hidden type="file" #fileInput name="pdfFile" [(ngModel)]="pdfFile" (change)="fileProgress($event.target)">
+        </div>
+        <div  class="files-list" *ngIf="fileData">
+          <p> {{ fileData.name }} </p>
+        </div>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <button type="submit" class="color-btn-primary-400" (click)="onSubmit(item.GCode)">ذخیره</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<div *ngIf="active && reportsList.length == 0">
+  <p class="empty-text">موردی برای مشاهده وجود ندارد</p>
+</div>

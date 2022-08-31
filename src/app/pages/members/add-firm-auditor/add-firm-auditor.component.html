@@ -1,0 +1,55 @@
+<div class="text-left btn-group-header">
+  <button mat-raised-button class="btn-add" routerLink="/SaharMember/FirmAuditor">بازگشت
+    <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">arrow_back</mat-icon>
+  </button>
+</div>
+<mat-card>
+  <mat-card-content>
+    <div fxLayoutAlign="row" *ngIf="lastCode">
+      <div fxFlex="100">
+        <p>
+          <strong>آخرین کدعضویت :</strong>
+          {{lastCode}}
+        </p>
+      </div>
+    </div>
+    <form fxLayout="row wrap" fxLayoutAlign="start center">
+      <div *ngFor="let item of forms; let index = index"
+           [fxFlex]="item.type === 'textArea'? 100 : 25"
+           fxFlex.md="33.33333"
+           fxFlex.sm="41.66667%"
+           fxFlex.xs="100"
+           fxLayout="column">
+        <mat-form-field *ngIf="item.type !== 'date' && item.type !== 'textArea'">
+          <input *ngIf="!item.data" matInput [placeholder]="item.faName" type="text" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}" [disabled]="item.disable" autocomplete="off">
+          <mat-select *ngIf="item.data" [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}">
+            <mat-option *ngIf="item.search">
+              <ngx-mat-select-search
+                [ngModelOptions]="{standalone: true}"
+                placeholderLabel="جستجو..."
+                noEntriesFoundLabel="'موردی یافت نشد لطفا متن را پاک کرده و دوباره امتحان کنید.'"
+                ngModel (ngModelChange)="filterMyOptions($event, index)"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="item.type === 'date'" class="mb-12 mt-16 material-form-field">
+          <input [name]="item.enName" class="datepicker" [id]="item.enName"
+                 [(ngModel)]="formData[item.enName]"
+                 (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+                 [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+          <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+        </div>
+        <div *ngIf="item.type === 'textArea'" class="mb-24">
+          <mat-form-field>
+            <textarea matInput [(ngModel)]="formData[item.enName]"  [ngModelOptions]="{standalone: true}" [placeholder]="item.faName" rows="8"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    <div class="text-left">
+      <button *ngIf="!edit"  mat-raised-button class="btn-success" (click)="sendFirmNew(formData)">افزودن</button>
+      <button *ngIf="edit"  mat-raised-button class="btn-success" (click)="update(formData)">ویرایش</button>
+    </div>
+  </mat-card-content>
+</mat-card>

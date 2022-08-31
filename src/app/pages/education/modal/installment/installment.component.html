@@ -1,0 +1,29 @@
+<p class="h3">تعریف اقساط</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <div  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 material-form-field">
+    <input name="someName" class="datepicker" id="CartEnd"
+           [(ngModel)]="formData.JDate"
+           (ngModelChange)="dateMode(formData.JDate, 'JDate')"
+           [dpDayPicker]="datePickerConfig" theme="dp-material" autocomplete="off" required>
+    <label for="CartEnd" class="material-form-field-label">تاریخ</label>
+  </div>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput class="text-right" currencyMask [(ngModel)]="formData.Amount"  [ngModelOptions]="{standalone: true}" placeholder="مبلغ" autocomplete="off">
+  </mat-form-field>
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngOptionInstallmen(2)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngOptionInstallmen(1)">ذخیره</button>
+</div>

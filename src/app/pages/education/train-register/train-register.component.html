@@ -1,0 +1,134 @@
+<div class="card-content">
+  <div class=" mat-elevation-z8" style="background: #ffffff">
+    <div class="title">
+      <p class="h4">دروس قابل ثبت نام</p>
+    </div>
+    <div *ngIf="!activeUser">
+      <table class="border-radius-8" mat-table [dataSource]="userCourses">
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef>نام دوره</th>
+          <td mat-cell *matCellDef="let element">{{element.Name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="RegisterDateStart">
+          <th mat-header-cell *matHeaderCellDef>تاریخ شروع ثبت نام</th>
+          <td mat-cell *matCellDef="let element">{{element.RegisterDateStart | dateType}}</td>
+        </ng-container>
+        <ng-container matColumnDef="RegisteDateEnd">
+          <th mat-header-cell *matHeaderCellDef>تاریخ خاتمه ثبت نام :</th>
+          <td mat-cell *matCellDef="let element">{{element.RegisteDateEnd | dateType}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CourseStart">
+          <th mat-header-cell *matHeaderCellDef>نام دوره</th>
+          <td mat-cell *matCellDef="let element">{{element.CourseStart}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CourseEnd">
+          <th mat-header-cell *matHeaderCellDef>نام خاطمه دوره</th>
+          <td mat-cell *matCellDef="let element">{{element.CourseEnd}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Amount">
+          <th mat-header-cell *matHeaderCellDef>قیمت</th>
+          <td mat-cell *matCellDef="let element">{{element.Amount}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Qty">
+          <th mat-header-cell *matHeaderCellDef>ظرفیت کلاس</th>
+          <td mat-cell *matCellDef="let element">{{element.Qty}}</td>
+        </ng-container>
+        <ng-container matColumnDef="RemindQty">
+          <th mat-header-cell *matHeaderCellDef>ظرفیت باقی مانده</th>
+          <td mat-cell *matCellDef="let element">{{element.RemindQty}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Address">
+          <th mat-header-cell *matHeaderCellDef>نام دوره</th>
+          <td mat-cell *matCellDef="let element">{{element.Address? element.Address: 'آدرس ثبت نشده است'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="operation">
+          <th mat-header-cell *matHeaderCellDef>عملیات</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button class="color-btn-click mr-16" (click)="ngAddCourses(element)">انتخاب درس</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay , sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+    </div>
+    <div class="card-empty" *ngIf="activeUser">
+      <p>برای شما دروس قابل ثبت نام وجود ندارد.</p>
+    </div>
+  </div>
+</div>
+<div class="card-content mt-16">
+  <div class=" mat-elevation-z8">
+    <mat-tab-group>
+      <mat-tab label="دروس در انتظار پرداخت">
+        <div *ngIf="!activeProgress">
+              <table class="border-radius-8"  mat-table [dataSource]="userCoursesProgress">
+                <ng-container matColumnDef="Position">
+                  <th mat-header-cell *matHeaderCellDef> ردیف </th>
+                  <td mat-cell *matCellDef="let element; let i = index;">
+                    {{i + 1}}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="CourseName">
+                  <th mat-header-cell *matHeaderCellDef>نام دوره</th>
+                  <td mat-cell *matCellDef="let element">{{element.CourseName}}</td>
+                </ng-container>
+                <ng-container matColumnDef="RankName">
+                  <th mat-header-cell *matHeaderCellDef>رتبه کاربر</th>
+                  <td mat-cell *matCellDef="let element">{{element.RankName}}</td>
+                </ng-container>
+                <ng-container matColumnDef="CourseStart">
+                  <th mat-header-cell *matHeaderCellDef>تاریخ شروع دوره</th>
+                  <td mat-cell *matCellDef="let element">{{element.CourseStart | dateType}}</td>
+                </ng-container>
+                <ng-container matColumnDef="TotAmount">
+                  <th mat-header-cell *matHeaderCellDef>کل شهریه</th>
+                  <td mat-cell *matCellDef="let element">{{element.TotAmount}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Amount">
+                  <th mat-header-cell *matHeaderCellDef>مبلغ قابل پرداخت</th>
+                  <td mat-cell *matCellDef="let element">{{element.Amount}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="userCoursesProgressTable , sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: userCoursesProgressTable;"></tr>
+              </table>
+        </div>
+        <div class="card-empty" *ngIf="activeProgress">
+          <p>برای شما دروس در انتظار پرداخت ثبت نشده است.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="دروس ثبت نام شده من">
+        <div *ngIf="!activeReg">
+          <!--    <table class="border-radius-8"  mat-table [dataSource]="lessons">-->
+          <!--      <ng-container matColumnDef="Position">-->
+          <!--        <th mat-header-cell *matHeaderCellDef> # </th>-->
+          <!--        <td mat-cell *matCellDef="let element; let i = index;">-->
+          <!--          {{i + 1}}-->
+          <!--        </td>-->
+          <!--      </ng-container>-->
+          <!--      <ng-container matColumnDef="Name">-->
+          <!--        <th mat-header-cell *matHeaderCellDef>نام دوره</th>-->
+          <!--        <td mat-cell *matCellDef="let element">{{element.Name}}</td>-->
+          <!--      </ng-container>-->
+          <!--      <ng-container matColumnDef="operation">-->
+          <!--        <th mat-header-cell *matHeaderCellDef>عملیات</th>-->
+          <!--        <td mat-cell *matCellDef="let element">-->
+          <!--          <button mat-mini-fab class="color-btn-warn ml-12" (click)="ngDelete(element.Gcode)">-->
+          <!--            <mat-icon>delete</mat-icon>-->
+          <!--          </button>-->
+          <!--          <button mat-mini-fab class="color-btn-click" (click)="ngEditLesson(element)">-->
+          <!--            <mat-icon>edit</mat-icon>-->
+          <!--          </button>-->
+          <!--        </td>-->
+          <!--      </ng-container>-->
+          <!--      <tr mat-header-row *matHeaderRowDef="columnsToDisplay , sticky: true"></tr>-->
+          <!--      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>-->
+          <!--    </table>-->
+        </div>
+        <div class="card-empty" *ngIf="activeReg">
+          <p>برای شما درس ثبت نشده است.</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

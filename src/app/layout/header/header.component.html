@@ -1,0 +1,50 @@
+<nav id="toolbar" class="toolbar">
+  <mat-toolbar class="toolbar-material">
+    <div fxFill="" fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <div class="px-8 px-md-16">
+          <div class="shortcuts"  fxLayout="row" >
+            <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="w-40 h-40 p-4" fxLayout="row" fxLayoutAlign="center center">
+                <a mat-icon-button="" class="mat-icon-button">
+                  <span class="mat-button-wrapper">
+                    <mat-icon class="mat-icon menu-remote" (click)="IdMenu.toggle()">menu</mat-icon>
+                  </span>
+                </a>
+              </div>
+              <div class="w-40 h-40 p-4" fxLayout="row" fxLayoutAlign="center center">
+                <app-notification></app-notification>
+              </div>
+              <div class="w-40 h-40 p-4" fxLayout="row" fxLayoutAlign="center center">
+                <app-question-and-answer></app-question-and-answer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="end center">
+        <div class="px-8 px-md-16">
+          <div class="shortcuts" fxLayout="row" >
+            <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="space-between center">
+              <button class="user-button mat-button" [matMenuTriggerFor]="menu">
+                <span class="mat-button-wrapper">
+                   <div class="mr-12" fxLayout="row" fxLayoutAlign="center center">
+                      <img class="avatar ml-0 ml-sm-16" src=".././../../assets/images/defualt.png" alt="">
+                     <p class="username m-0" fxHide="" fxShow.gt-sm="">{{user.FirstName}} {{user.LastName}}</p>
+                     <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">keyboard_arrow_down</mat-icon>
+                    </div>
+                </span>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="logout()">
+                  <mat-icon>exit_to_app</mat-icon>
+                  <span>خروج</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+</nav>

@@ -1,0 +1,41 @@
+<mat-card *ngIf="fullCard">
+  <mat-card-content>
+    <form fxLayout="row wrap"
+           fxLayoutAlign="start center">
+      <mat-form-field class="mb-24" *ngFor="let item of formCompany"  fxFlex="25"
+                      fxFlex.md="33.33333"
+                      fxFlex.sm="41.66667%"
+                      fxFlex.xs="100"
+                      fxLayout="column">
+        <input *ngIf="!item.data" matInput [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}" [disabled]="item.disable" [type]="item.type">
+        <mat-select *ngIf="item.data && item.enName != 'provinces' && item.enName !='citeies'" [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+        </mat-select>
+        <mat-select *ngIf="item.enName == 'provinces' && item.enName !='citeies'"
+                    [placeholder]="item.faName"
+                    [(ngModel)]="provinces"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="selectProvinces(provinces)">
+          <mat-option *ngFor="let subItem of item.data" [value]="subItem.citeies">{{subItem.name}}</mat-option>
+        </mat-select>
+        <mat-select *ngIf="item.enName =='citeies'" [placeholder]="item.faName" [(ngModel)]="formData['GnrCityGCode_Trade']" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let subItem of citeies" [value]="subItem.Value">{{subItem.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <div fxLayout="row"
+         fxLayoutAlign="center start"
+         fxLayoutGap="12px">
+      <div fxFlex="100" fxLayoutAlign="end center">
+        <button mat-raised-button class="btn-success" (click)="ngEditCompany()">ذخیره</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card *ngIf="!fullCard">
+  <mat-card-content>
+    <div class="card-empty">
+      <p>هیچ شرکتی با این آیدی یافت نشد</p>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,14 @@
+<p class="h3">تعریف اطلاعات کلاس</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <mat-form-field fxFlex="100"
+                  class="mb-12">
+    <input matInput [(ngModel)]="formData.Name"  [ngModelOptions]="{standalone: true}" placeholder="نام دوره" autocomplete="off">
+  </mat-form-field>
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngAddLesson(formData, 1)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngAddLesson(formData, 2)">ذخیره</button>
+</div>
+

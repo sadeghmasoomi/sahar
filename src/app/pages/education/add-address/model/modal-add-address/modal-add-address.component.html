@@ -1,0 +1,43 @@
+<p class="h3">تعریف آدرس</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <mat-form-field fxFlex="33.3333"
+                  fxFlex.md="33.3333"
+                  fxFlex.sm="100"
+                  fxFlex.xs="100"
+                  fxLayout="column"
+                  class="mb-12">
+    <input matInput [(ngModel)]="formData.Code" [ngModelOptions]="{standalone: true}" placeholder="کد آدرس" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field fxFlex="33.3333"
+                  fxFlex.md="33.3333"
+                  fxFlex.sm="100"
+                  fxFlex.xs="100"
+                  fxLayout="column"
+                  class="mb-12">
+    <mat-select placeholder="استان"  [(ngModel)]="state" (ngModelChange)="importCities(state)">
+      <mat-option *ngFor="let item of citiesKeys" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="33.3333"
+                  fxFlex.md="33.3333"
+                  fxFlex.sm="100"
+                  fxFlex.xs="100"
+                  fxLayout="column"
+                  class="mb-12">
+    <mat-select placeholder="شهر"  [(ngModel)]="formData.GnrCityGcode">
+      <mat-option *ngFor="let item of this.selectCities" [value]="item.Value">{{item.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="100"
+                  fxLayout="column"
+                  class="mb-12">
+    <textarea matInput [(ngModel)]="formData.Address"  [ngModelOptions]="{standalone: true}" placeholder="آدرس" autocomplete="off"> </textarea>
+  </mat-form-field>
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngAddAddress(formData, 1)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngAddAddress(formData, 2)">ذخیره</button>
+</div>
+

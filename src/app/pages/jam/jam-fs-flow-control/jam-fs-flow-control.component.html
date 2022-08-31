@@ -1,0 +1,84 @@
+<div class="card-content">
+  <div class="content-card">
+    <mat-tab-group dynamicHeight>
+      <mat-tab *ngFor="let item of firmContract" [label]="'منتهی به : '+item.DurationYear">
+        <div>
+          <mat-card>
+            <mat-card-content>
+              <div class="mb-24" fxLayout="row" fxLayoutAlign="start start">
+                <div class="text-center" fxFlex="0 0 33.33333%">
+                  <p>
+                  <span>
+                    <strong> شناسه شرکت  : </strong>
+                  </span>
+                    <span>{{item.CustomerNationalId}}</span>
+                  </p>
+                  <p>
+                    <span>
+                      <strong>سال مالی : </strong>
+                    </span>
+                    <span>
+                      {{item.DurationDateEnd | dateType}}
+                    </span>
+                  </p>
+                  <p>
+                  <span>
+                    <strong>شماره قرارداد : </strong>
+                  </span>
+                    <span> {{item.TreatyNo}} </span>
+                  </p>
+                </div>
+                <div class="text-center" fxFlex="0 0 33.33333%">
+                  <p>
+                  <span>
+                    <strong>نام شرکت : </strong>
+                  </span>
+                    <span>{{item.CustomerName}}</span>
+                  </p>
+                  <p>
+                  <span>
+                    <strong> تاریخ قرارداد : </strong>
+                  </span>
+                    <span> {{item.TreatyDate}} </span>
+                  </p>
+                  <p *ngIf="item.Amount">
+                  <span>
+                    <strong>مبلغ قرارداد : 	</strong>
+                  </span>
+                    <span> {{item.Amount |  number: '3.'}} </span>
+                  </p>
+
+                </div>
+                <div class="text-center" fxFlex="0 0 33.33333%">
+                  <p>
+                    <span>
+                      <strong>وضعیت : </strong>
+                    </span>
+                    <span *ngIf="item.StatusGCode === '1'">ثبت اطلاعات</span>
+                    <span *ngIf="item.StatusGCode === '30'">تایید اطلاعات توسط شرکت</span>
+                    <span *ngIf="item.StatusGCode === '40'">تایید اطلاعات توسط حسابرس</span>
+                    <span *ngIf="item.StatusGCode === '41'">عدم تایید توسط حسابرس</span>
+                  </p>
+                </div>
+              </div>
+              <div class="btn-group-box" fxLayout="row" fxLayoutAlign="end end">
+                <button class="color-btn-primary-200 btn-group" routerLinkActive="active" [routerLink]="['cost-and-benefit/', item.DurationDateEnd,item.GCode]" mat-raised-button> سود و زیان</button>
+                <button class="color-btn-primary-300 btn-group" routerLinkActive="active" [routerLink]="['add-contracts/', item.DurationDateEnd,item.GCode]" mat-raised-button>ترازنامه</button>
+                <button class="color-btn-primary-400 btn-group" routerLinkActive="active" [routerLink]="['cash-flow/', item.DurationDateEnd,item.GCode]" mat-raised-button> صورت جریان وجوه نقد</button>
+                <button class="color-btn-primary-500 btn-group" routerLinkActive="active" [routerLink]="['rest-information/', item.DurationDateEnd,item.GCode]" mat-raised-button>سایر اطلاعات</button>
+                <button class="color-btn-primary-600 btn-group" routerLinkActive="active" [routerLink]="['shareholders', item.GCode]" mat-raised-button>سهامداران موثر</button>
+                <button class="color-btn-primary-700 btn-group" routerLinkActive="active" [routerLink]="['transAffiliates', item.GCode]" mat-raised-button>اشخاص وابسته</button>
+                <button class="btn-add-success" mat-raised-button *ngIf="!this.activeButton" (click)="ngAccept(item.GCode)" [disabled]="item.FinansialStatusGCode == 30 || item.FinansialStatusGCode ==40">تایید</button>
+                <button class="color-btn-warn" mat-raised-button *ngIf="!this.activeButton" (click)="ngUnAccept(item.GCode)">عدم تایید</button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+<div class="child-section">
+  <router-outlet></router-outlet>
+</div>
+

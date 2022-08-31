@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "samim";
+  font-style: normal;
+  font-weight: 500;
+  src: url('samim/Samim-FD.eot'); /* IE9 Compat Modes */
+  src: url('samim/Samim-FD.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('samim/Samim-FD.woff2') format('woff2'), /* Super Modern Browsers */
+  url('samim/Samim-FD.woff') format('woff'), /* Pretty Modern Browsers */
+  url('samim/Samim-FD.ttf')  format('truetype') /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: "samimBd";
+  font-style: normal;
+  font-weight: 500;
+  src: url('samim/Samim-Bold-FD.eot'); /* IE9 Compat Modes */
+  src: url('samim/Samim-Bold-FD.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('samim/Samim-Bold-FD.woff2') format('woff2'), /* Super Modern Browsers */
+  url('samim/Samim-Bold-FD.woff') format('woff'), /* Pretty Modern Browsers */
+  url('samim/Samim-Bold-FD.ttf')  format('truetype') /* Safari, Android, iOS */
+}

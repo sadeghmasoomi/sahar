@@ -1,0 +1,50 @@
+<p class="h3">آدرس ها</p>
+<div class="card-empty" *ngIf="!active && addresses.length == 0">
+  <p>آدرس ثبت نشده است.</p>
+  <div class="mb-12 mt-12">
+    <button mat-raised-button class="btn-success" (click)="addAddressActive()">تعریف اطلاعات دوره</button>
+  </div>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center" *ngIf="active">
+  <mat-form-field fxFlex="100">
+    <mat-select placeholder="انتخاب آدرس" [(ngModel)]="addressForm" [ngModelOptions]="{standalone: true}">
+      <mat-option *ngFor="let item of addressesList" [value]="item.Gcode">{{item.Address}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxFlex="auto" class="text-left mb-12 mt-12">
+    <button mat-raised-button class="color-btn-click ml-12" (click)="addAddressActive()">آدرس ها</button>
+    <button mat-raised-button class="btn-success" (click)="ngAddAddress(addressForm)">افزودن آدرس</button>
+  </div>
+</div>
+<div *ngIf="addresses.length > 0">
+  <table class="border-radius-8"  mat-table [dataSource]="addresses">
+    <ng-container matColumnDef="Position">
+      <th mat-header-cell *matHeaderCellDef> ردیف </th>
+      <td mat-cell *matCellDef="let element; let i = index;">
+        {{i + 1}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="CityName">
+      <th mat-header-cell *matHeaderCellDef>شهر</th>
+      <td mat-cell *matCellDef="let element">{{element.CityName}}</td>
+    </ng-container>
+    <ng-container matColumnDef="Address">
+      <th mat-header-cell *matHeaderCellDef>آدرس</th>
+      <td mat-cell *matCellDef="let element">{{element.Address}}</td>
+    </ng-container>
+    <ng-container matColumnDef="operation">
+      <th mat-header-cell *matHeaderCellDef>عملیات</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-mini-fab class="color-btn-warn ml-12" (click)="ngDelete(element.Gcode)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay , sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+  <div class="text-left mt-12">
+    <button mat-raised-button class="btn-success" (click)="addAddressActive()">تعریف آدرس</button>
+  </div>
+</div>

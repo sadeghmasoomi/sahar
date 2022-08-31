@@ -1,0 +1,14 @@
+<form class="form-search" [formGroup]="addFormPersonal" (ngSubmit)="ngSearchCompany()">
+  <div class="search-wrapper search-center">
+    <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+      <input formControlName="NationalId" maxlength="10" placeholder="شخص مورد نظر خودا جستجو کنید ...">
+      <button mat-mini-fab class="btn-success">
+        <mat-icon class="mat-icon btn-search" role="img" aria-hidden="true">search</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="child-section">
+  <router-outlet></router-outlet>
+</div>

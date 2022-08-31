@@ -1,0 +1,145 @@
+<div fxLayout="row" fxLayoutAlign="end">
+  <div fxFlex="30%">
+    <form class="form-search-filter">
+      <div class="search-wrapper search-center">
+        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+          <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با نام خانوادگی یا کد عضویت ...">
+          <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
+            <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="20" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="20">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="80">
+      <strong>کد</strong>
+    </div>
+  </div>
+  <div fxFlex="80" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="50" class="pl-16">
+      <strong>نام موسسه</strong>
+    </div>
+    <div fxFlex="50" class="pl-16">
+      <strong>تعداد کارکنان</strong>
+    </div>
+<!--    <div fxFlex="50" class="pl-16">-->
+<!--      <strong>نوع</strong>-->
+<!--    </div>-->
+<!--    <div fxFlex="50" class="pl-16">-->
+<!--      <strong>تعداد مدیر</strong>-->
+<!--    </div>-->
+<!--    <div fxFlex="50" class="pl-16">-->
+<!--      <strong>تعداد اعضا</strong>-->
+<!--    </div>-->
+<!--    <div fxFlex="50" class="pl-16">-->
+<!--      <strong>میانگین سن</strong>-->
+<!--    </div>-->
+<!--    <div fxFlex="50" class="pl-16">-->
+<!--      <strong>وضعیت</strong>-->
+<!--    </div>-->
+  </div>
+</div>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of reportConnect | async; let index = index" class="member-card"
+                       (opened)="ngGetReportDetails(item)">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="20" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="20">
+          <strong>  {{index + 1}}</strong>
+        </div>
+        <div fxFlex="80">
+          {{item.Code}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="80" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="50">
+          {{item.Name}}
+        </div>
+        <div fxFlex="50">
+          {{item.Qty}}
+        </div>
+<!--        <div fxFlex="50">-->
+<!--          {{item.FirmKindName}}-->
+<!--        </div>-->
+<!--        <div fxFlex="50">-->
+<!--          {{item.Manager}}-->
+<!--        </div>-->
+<!--        <div fxFlex="50">-->
+<!--          {{item.Partner}}-->
+<!--        </div>-->
+<!--        <div fxFlex="50">-->
+<!--          {{item.AvrageMemAge}}-->
+<!--        </div>-->
+<!--        <div fxFlex="50">-->
+<!--          {{item.FirmStatusName}}-->
+<!--        </div>-->
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28">
+      <div class="mt-12" fxFlex="25">
+        <p class="h3">کارکنان</p>
+      </div>
+      <div class="mt-12" fxFlex="100">
+        <table style="overflow: auto" class="border-radius-8 text-center" mat-table [dataSource]="item.Details">
+          <ng-container class="text-center" matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              {{i + 1}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="FirstName">
+            <th mat-header-cell *matHeaderCellDef>نام</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.FirstName}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="LastName">
+            <th mat-header-cell *matHeaderCellDef>نام خانوادگی</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.LastName }}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="NationalId">
+            <th mat-header-cell *matHeaderCellDef>شماره ملی</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.NationalId}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="Increase">
+            <th mat-header-cell *matHeaderCellDef>تاریخ ورود طی دوره</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.Increase | dateType}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="ST">
+            <th mat-header-cell *matHeaderCellDef>تاریخ اول دوره</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.ST | dateType}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="Decrease">
+            <th mat-header-cell *matHeaderCellDef>تاریخ خروج طی دوره</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.Decrease | dateType}}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay , sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  class="mt-12"
+  showFirstLastButtons
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 30, 40, 50, 60, 70, 80, 90, 100]">
+</mat-paginator>
+

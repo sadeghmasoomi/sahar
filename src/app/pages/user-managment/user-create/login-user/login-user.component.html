@@ -1,0 +1,49 @@
+<p class="h3">مدیریت کارمندان آزاد</p>
+<div fxLayout="row" fxLayoutAlign="end">
+  <div fxFlex="50%">
+    <form class="form-search-filter">
+      <div class="search-wrapper search-center">
+        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+          <input [(ngModel)]="name" name="search"  placeholder="جستجوی کاربر با شناسه ملی ...">
+          <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
+            <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="end" *ngIf="employee">
+  <div fxFlex="100%">
+    <form fxLayout="row wrap"
+          fxLayoutAlign="start center">
+      <mat-form-field class="mb-24" fxFlex="50"
+                      fxLayout="column">
+        <input matInput [value]="employee.FirstName" [disabled]="true" placeholder="نام">
+      </mat-form-field>
+      <mat-form-field  class="mb-24" fxFlex="50"
+                       fxLayout="column">
+        <input matInput [value]="employee.LastName" [disabled]="true" placeholder="نام خانوادگی">
+      </mat-form-field>
+      <div fxFlex="100" class="mb-12 mt-16 material-form-field">
+        <input name="StartJdate" [readOnly]="true"
+               id="StartJdate" [(ngModel)]="formData.StartJdate"
+               (ngModelChange)="dateMode(formData.StartJdate, 'StartJdate')"
+               [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+        <label for="StartJdate" class="material-form-field-label">تاریخ شروع</label>
+      </div>
+      <mat-form-field fxFlex="100">
+        <input matInput
+               [(ngModel)]="formData['Dec']"
+               name="Dec"
+               type="text"
+               placeholder="توضیحات">
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+<div class="text-left" *ngIf="employee">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick(false)">بستن</button>
+  <button mat-raised-button class="btn-success" (click)="ngOperationUsersFree()">افزودن</button>
+</div>
+

@@ -1,0 +1,22 @@
+.main-table {
+  .table-box {
+    position: relative;
+    min-height: 200px;
+    max-height: 400px;
+    overflow: auto;
+    table {
+      max-height: 400px;
+      overflow: auto;
+ }
+}
+
+}
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}

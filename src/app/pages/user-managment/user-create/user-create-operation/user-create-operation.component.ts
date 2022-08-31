@@ -130,7 +130,6 @@ export class UserCreateOperationComponent{
   }
 
   ngCheckUserData(data: {NationalID: string, birthDate: string}): void {
-    console.log('data:', data);
     this.callData.getCheckUserData(data).subscribe( res => {
       if (res.state) {
         this.formData = {
@@ -141,7 +140,7 @@ export class UserCreateOperationComponent{
           NationalId: this.name,
           IdNumber: res.msg.shenasnameNo[0],
           BirthDate: this.BirthDate,
-        }
+        };
       }
     });
   }

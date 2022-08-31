@@ -1,0 +1,57 @@
+<p class="h3">تعریف اطلاعات دوره</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <mat-form-field  fxFlex="50"
+        fxFlex.md="50"
+        fxFlex.sm="100"
+        fxFlex.xs="100"
+        fxLayout="column"
+        class="mb-12">
+    <input matInput type="text" [(ngModel)]="formData.Name"  [ngModelOptions]="{standalone: true}" placeholder="نام دوره" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <mat-select placeholder="نوع دوره"  [(ngModel)]="formData.TrainCourseTypeGcode">
+      <mat-option [value]="1">کلاسهای آموزشی</mat-option>
+      <mat-option [value]="2">کارگاه آموزشی</mat-option>
+      <mat-option [value]="3">وبینار</mat-option>
+      <mat-option [value]="4">سمینار</mat-option>
+      <mat-option [value]="5">همایش ها</mat-option>
+      <mat-option [value]="11">آزمون</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="text" [(ngModel)]="formData.Comment"  [ngModelOptions]="{standalone: true}" placeholder="توضیحات" autocomplete="off">
+  </mat-form-field>
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngOption(2)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngOption(1)">ذخیره</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

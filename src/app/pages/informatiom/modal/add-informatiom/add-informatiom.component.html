@@ -1,0 +1,40 @@
+<p class="h3 mb-16">ورود اطلاعات مالی (ارقام به میلیون ریال وارد شود)</p>
+<div fxLayout="row" fxLayoutAlign="end" *ngIf="data">
+  <div fxFlex="100%">
+    <form fxLayout="row wrap"
+          fxLayoutAlign="start center">
+      <mat-form-field class="mb-24" fxFlex="50"
+                      fxLayout="column">
+        <input matInput
+               currencyMask
+               [(ngModel)]="formData.Operatingincome"
+               [ngModelOptions]="{standalone: true}"
+               type="text"
+               [placeholder]="'جمع کل ناخالص درآمد (عملیاتی و غیر عملیاتی)'">
+      </mat-form-field>
+      <mat-form-field  class="mb-24" fxFlex="50"
+                       fxLayout="column">
+        <input matInput
+               currencyMask
+               [(ngModel)]="formData.Totalassets"
+               [ngModelOptions]="{standalone: true}"
+               type="text"
+               [placeholder]="'جمع دارائی ها'" >
+      </mat-form-field>
+      <mat-form-field  class="mb-24" fxFlex="100"
+                       fxLayout="column">
+        <input matInput
+               currencyMask
+               [(ngModel)]="formData.RecivedIncome"
+               [ngModelOptions]="{standalone: true}"
+               type="text"
+               [placeholder]="'جمع دریافتی پیمان ها'" >
+        <h5 class="dis">(صرفا برای شرکت های پیمانکاری)</h5>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+<div class="text-left" *ngIf="data">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClickFun(false)">بستن</button>
+  <button mat-raised-button class="btn-success" (click)="ngAddInformatiom()">افزودن</button>
+</div>

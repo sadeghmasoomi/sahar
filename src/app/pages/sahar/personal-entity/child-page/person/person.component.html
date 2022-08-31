@@ -1,0 +1,87 @@
+<mat-card>
+  <mat-card-content>
+    <form  fxLayout="row wrap"
+           fxLayoutAlign="start center">
+      <div *ngFor="let item of formCompany"
+           class="mb-24"  fxFlex="25"
+           fxFlex.md="33.33333"
+           fxFlex.sm="41.66667%"
+           fxFlex.xs="100"
+           fxLayout="column">
+        <div fxFlex="100%" *ngIf="!item.data &&  item.enName !== 'FoundationDate' && item.enName !== 'BirthDate'" >
+          <mat-form-field>
+            <input matInput [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" name="item.enName" [disabled]="item.disable" [type]="item.type">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100%" *ngIf="item.data &&
+            item.enName != 'provinces' &&
+            item.enName != 'provinces_Birth' &&
+            item.enName !='citeies' &&
+            item.enName !='citeies_Birth'">
+          <mat-form-field>
+            <mat-select [placeholder]="item.faName"
+              [(ngModel)]="formData[item.enName]"
+              [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100%" *ngIf="item.enName == 'provinces_Birth'">
+          <mat-form-field>
+            <mat-select [placeholder]="item.faName"
+                        [(ngModel)]="provincesB"
+                        [name]="item.faName"
+                        (ngModelChange)="selectProvincesB(provincesB)">
+              <mat-option *ngFor="let subItem of item.data" [value]="subItem.citeies">{{subItem.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100%" *ngIf="item.enName =='citeies_Birth'">
+          <mat-form-field>
+            <mat-select [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let subItem of citeiesB" [value]="subItem.Value">{{subItem.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100%" *ngIf="item.enName == 'provinces' && item.enName !='citeies'">
+          <mat-form-field>
+            <mat-select
+                        [placeholder]="item.faName"
+                        [(ngModel)]="provinces"
+                        [name]="item.faName"
+                        (ngModelChange)="selectProvinces(provinces)">
+              <mat-option *ngFor="let subItem of item.data" [value]="subItem.citeies">{{subItem.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100%" *ngIf="item.enName =='citeies'">
+          <mat-form-field>
+            <mat-select [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let subItem of citeies" [value]="subItem.Value">{{subItem.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50"
+             fxFlex.md="50"
+             fxFlex.sm="100"
+             fxFlex.xs="100"
+             fxLayout="column"
+             *ngIf="item.enName === 'FoundationDate' || item.enName === 'BirthDate'"
+             class="mb-12 mt-16 material-form-field">
+          <input [name]="item.enName" class="datepicker"  id="RegisterDateStart" [(ngModel)]="formData[item.enName]"
+                 (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+                 [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+          <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+        </div>
+      </div>
+    </form>
+    <div fxLayout="row"
+         fxLayoutAlign="center start"
+         fxLayoutGap="12px">
+      <div fxFlex="100" fxLayoutAlign="end center">
+        <button mat-raised-button *ngIf="fullCard" class="btn-success"  (click)="updatePerson()">ذخیره</button>
+        <button mat-raised-button *ngIf="!fullCard" class="btn-success"  (click)="addPerson()">افزودن</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

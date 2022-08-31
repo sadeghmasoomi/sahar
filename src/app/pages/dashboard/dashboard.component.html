@@ -1,0 +1,23 @@
+<div fxLayout="row wrap"  fxLayoutAlign="center center" class="cardList" *ngIf="getCompanies">
+  <div fxFlex="16.6666%"
+       fxFlex.lg="22"
+       fxFlex.md="22"
+       fxFlex.sm="50"
+       fxFlex.xs="100"
+       fxLayout="column"
+       *ngFor="let item of getCompanies" (click)="selectCompany({companyName : item.firmName})">
+    <mat-card class="card-company" [ngClass]="{'active': item.FirminfoGcode === selectedCompany}" matRipple>
+      <img class="logo" mat-card-image src="../../../assets/images/defualtCompany.png" alt="">
+      <mat-card-header class="text-center">
+        <mat-card-title class="h5 header-title m-0">
+          <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">home_work</mat-icon>
+          {{item.firmName}}
+        </mat-card-title>
+        <mat-card-subtitle class="sub-header-title m-0">
+          <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">supervised_user_circle</mat-icon>
+          {{item.roleName}}
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</div>

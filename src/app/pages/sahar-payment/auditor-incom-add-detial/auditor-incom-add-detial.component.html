@@ -1,0 +1,47 @@
+<p class="h3">افزودن المان</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <div *ngFor="let item of forms"
+       fxFlex="100"
+       fxFlex.md="100"
+       fxFlex.sm="100"
+       fxFlex.xs="100"
+       fxLayout="column">
+    <div class="mb-24" *ngIf="!item.data && item.type !== 'date'  && item.type !=='file' && item.type !== 'number'">
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="formData[item.enName]"
+          [ngModelOptions]="{standalone: true}"
+          [placeholder]="item.faName" [disabled]="item.disable">
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.type === 'number'" class="mb-24">
+      <mat-form-field>
+        <input matInput
+               [(ngModel)]="formData[item.enName]"
+               [ngModelOptions]="{standalone: true}"
+               type="number"
+               [placeholder]="item.faName">
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.data">
+      <mat-form-field>
+        <mat-select
+          [placeholder]="item.faName"
+          [(ngModel)]="formData[item.enName]"
+          [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     fxLayoutGap="12px">
+  <div fxFlex="100" fxLayoutAlign="end justify">
+    <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+    <button mat-raised-button class="btn-add-success" (click)="onSubmit(data.element ? 2 : 1)">ثبت</button>
+  </div>
+</div>

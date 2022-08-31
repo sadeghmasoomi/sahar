@@ -1,0 +1,30 @@
+@import "src/assets/scss/helpers/colors";
+.auth{
+  .logo-auth{
+    margin: 0 0 1.5rem !important;
+    width: 100%;
+    height: auto;
+    background: $block-gray;
+    padding: 15px;
+    border-radius: .5rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  }
+  .get-pass{
+    position: absolute;
+    left: 0;
+    top: -12px;
+  }
+  .send-btn{
+    display: block;
+    width: 100%;
+  }
+  .invalid-feedback{
+    margin-right: .9rem;
+    margin-bottom: .9rem;
+    color: #f44336;
+  }
+}
+.invalid-feedback{
+  bottom: -32px !important;
+}
+

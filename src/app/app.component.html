@@ -1,0 +1,93 @@
+<div id="main" *ngIf="currentUser && !activeInfoPag">
+  <mat-drawer-container class="main-container" style="overflow: hidden;">
+    <mat-drawer #drawer class="sidebar-right" [mode]="mode.value" [(opened)]="opened">
+      <nav>
+        <div class="navbar-top">
+          <div class="logo"><img class="logo-icon" src="../assets/images/logos/logo.png" alt=""></div>
+        </div>
+        <div class="navbar-container ps">
+          <div>
+            <div class="user fuse-navy-900" fxLayout="column">
+              <div class="h4 username" *ngIf="user">{{user.FirstName}} {{user.LastName}}</div>
+              <!--{{user.Email}}-->
+              <div class="h6 email hint-text mt-8">
+                <button class="user-button mat-button" [matMenuTriggerFor]="company">
+                <span class="mat-button-wrapper">
+                   <div class="mr-12" fxLayout="row" fxLayoutAlign="center center">
+                     <p class="username m-0" fxHide="" fxShow.gt-sm="">{{companyNameShow}}</p>
+                     <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">keyboard_arrow_down</mat-icon>
+                    </div>
+                </span>
+                </button>
+                <mat-menu #company="matMenu">
+                  <button class="btn-drop" mat-menu-item *ngFor="let item of getCompanies" (click)="chooseCompanySelect(item.firmName)">
+                    <span> {{item.firmName}} </span>
+                  </button>
+                </mat-menu>
+              </div>
+              <div class="avatar-container">
+                <img class="avatar" src="../assets/images/defualt.png" alt="">
+              </div>
+            </div>
+            <div class="navbar-content">
+              <div class="nav vertical">
+                <div class="group-items">
+                  <div class="nav-item">
+                    <app-nav *ngFor="let item of menuItem | orderBy:'order'" [item]="item"></app-nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </mat-drawer>
+    <app-header [IdMenu]="drawer"></app-header>
+<!--    main content-->
+    <app-loader></app-loader>
+    <div>
+      <div class="content">
+        <app-breadcrumb></app-breadcrumb>
+        <div class="content-body">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+      <footer class="ng-star-inserted below-fixed fuse-navy-900">
+        <mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+          <div fxFlex="" fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.gt-xs="space-between center">
+            <a class="pink mat-button" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="start center" href="" mat-button="" target="_blank" tabindex="0" aria-disabled="false">
+              <span class="mat-button-wrapper">
+                <mat-icon class="s-16 mr-sm-4 mat-icon" role="img" aria-hidden="true"></mat-icon>
+                <span></span>
+              </span>
+              <div class="mat-button-ripple mat-ripple"></div>
+              <div class="mat-button-focus-overlay"></div>
+            </a>
+            <div fxHide="" fxLayout="row" fxLayoutAlign="start center" fxShow.gt-xs="">
+              <a mat-button="" class="mat-button" tabindex="0" aria-disabled="false">
+                <span class="mat-button-wrapper"></span>
+                <div class="mat-button-ripple mat-ripple" mat-ripple=""></div>
+                <div class="mat-button-focus-overlay"></div>
+              </a>
+              <span></span>
+              <a mat-button="" class="mat-button" tabindex="0" aria-disabled="false">
+                <span class="mat-button-wrapper"></span>
+                <div class="mat-button-ripple mat-ripple" mat-ripple=""></div>
+                <div class="mat-button-focus-overlay"></div>
+              </a>
+            </div>
+          </div>
+        </mat-toolbar>
+      </footer>
+    </div>
+  </mat-drawer-container>
+</div>
+
+<div id="content-login" *ngIf="!currentUser && !activeInfoPag">
+  <router-outlet></router-outlet>
+</div>
+<div id="content-login"  *ngIf="activeInfoPag">
+  <router-outlet></router-outlet>
+</div>
+
+

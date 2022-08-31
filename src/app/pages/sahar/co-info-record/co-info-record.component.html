@@ -1,0 +1,63 @@
+<div class="mt-12">
+  <form class="form-search form-search-filter" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div fxFlex="30%" class="search-wrapper">
+      <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+        <input [(ngModel)]="name" name="name" maxlength="11" [placeholder]="'شناسه ملی شرکت را وارد کنید ...'">
+      </div>
+    </div>
+<!--    <div fxFlex="20%">-->
+<!--      <select class="select-search" name="coTypeCode">-->
+<!--        <option [value]="2">حقوقی</option>-->
+<!--      </select>-->
+<!--    </div>-->
+    <div fxFlex="10%">
+      <button mat-raised-button class="btn-success" (click)="getCompanyFromApi(name)">
+        جستجو
+      </button>
+    </div>
+  </form>
+</div>
+<div *ngIf="dataValues">
+  <table class="border-radius-8 table-font-small" mat-table [dataSource]="dataValues">
+    <ng-container matColumnDef="FoundationDate">
+      <th mat-header-cell *matHeaderCellDef>تاریخ تاسیس</th>
+      <td mat-cell *matCellDef="let element"> {{element.FoundationDate | dateType}} </td>
+    </ng-container>
+    <ng-container matColumnDef="NationalID">
+      <th mat-header-cell *matHeaderCellDef>شناسه ملی</th>
+      <td mat-cell *matCellDef="let element"> {{element.NationalID}} </td>
+    </ng-container>
+    <ng-container matColumnDef="StatusDsc">
+      <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+      <td mat-cell *matCellDef="let element"> {{element.StatusDsc}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>نام</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="operation">
+      <th mat-header-cell *matHeaderCellDef>عملیات</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button class="btn-add-success" (click)="getCompanyDataFromApi(element.NationalID)"> ثبت نام شرکت در سامانه جامع تجارت</button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+</div>
+<mat-card class="mt-12">
+  <mat-card-content>
+    <div class="text-right">
+      <p>
+        با عنایت به هماهنگی انجام شده با سامانه جامع تجارت مرکز توسعه تجارت الکترونیکی وزارت صمت ، توافق شد که تا زمان ثبت نام شرکت در سامانه جامع تجارت ، موسسات حسابرسی میتوانند با استفاده از بخشی از سرویسهای سامانه جامع تجارت و از طریق سامانه سحر نسبت به ثبت نام شرکت در سامانه جامع تجارت اقدام نمایند تا در امور جاری سامانه سحر مشکلی بوجود نیاید در همین رابطه توجه به موارد زیر ضروری میاشد :
+      </p>
+      <p>الف – ثبت نام انجام شده ثبت نام موقت بوده و شرکت نمیتواند از امکانات سامانه جامع تجارت استفاده نموده و یا وارد سامانه مذکور و سامانه جام شود .</p>
+      <p>ب – موسسات حسابرسی با استفاده از ثبت نام مذکور میتوانند به عملیات خود مانند ثبت قرارداد و یا گزارش  اقدام نمایند .</p>
+      <p>ج – قرارداد ها و گزارشات شرکت ثبت نام شده نهایتا تا روز بعد بصورت خودکار از سامانه قدیم به سامانه جدید منتقل میشود .</p>
+      <p>د – در حال حاضر ثبت نام اشخاص حقوقی که در ثبت شرکتها دارای شناسه ملی میباشند امکانپذیر میباشد .</p>
+      <p>ه – در صورتیکه شرکتها در نظر دارند که مستقیما " در سامانه جامع تجارت ثبت نام نمایند از استفاده از این روش خودداری فرمائید. </p>
+      <p>و – از این روش صرفا" برای موارد اضطراری استفاده شود و روش مناسب ثبت نام شرکت در سامانه جامع تجارت میباشد  .</p>
+    </div>
+  </mat-card-content>
+</mat-card>
+

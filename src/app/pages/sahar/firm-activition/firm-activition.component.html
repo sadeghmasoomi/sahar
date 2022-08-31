@@ -1,0 +1,58 @@
+<div>
+  <form class="form-search-filter" fxFlex="row" fxLayoutAlign="end center">
+    <div class="search-wrapper search-center">
+      <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+        <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با شناسه و نام شرکت...">
+        <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
+          <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="card-content">
+  <div class="mat-elevation-z8">
+    <table class="border-radius-8 table-font-small" mat-table [dataSource]="companyData">
+      <ng-container matColumnDef="row">
+        <th mat-header-cell *matHeaderCellDef>ردیف</th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}}</td>
+      </ng-container>
+      <ng-container matColumnDef="CoName">
+        <th mat-header-cell *matHeaderCellDef> شرکت</th>
+        <td mat-cell *matCellDef="let element"> {{element.CoName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="TreatyDate">
+        <th mat-header-cell *matHeaderCellDef>تاریخ قرارداد</th>
+        <td mat-cell *matCellDef="let element"> {{element.TreatyDate}} </td>
+      </ng-container>
+      <ng-container matColumnDef="TreatyNo">
+        <th mat-header-cell *matHeaderCellDef>شماره قرارداد</th>
+        <td mat-cell *matCellDef="let element"> {{element.TreatyNo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="FinalAmount">
+        <th mat-header-cell *matHeaderCellDef>مبلغ صورتحساب</th>
+        <td mat-cell *matCellDef="let element"> {{element.FinalAmount}} </td>
+      </ng-container>
+      <ng-container matColumnDef="DurationDateEnd">
+        <th mat-header-cell *matHeaderCellDef>سال مالی</th>
+        <td mat-cell *matCellDef="let element"> {{element.DurationDateEnd | dateType}} </td>
+      </ng-container>
+      <ng-container matColumnDef="StatusName">
+        <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+        <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="FirmActivition">
+        <th mat-header-cell *matHeaderCellDef>تسویه حساب</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox
+            [checked]="element.FirmActivition"
+            color="accent"
+            (change)="firmActivitionSet($event.checked, element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    </table>
+  </div>
+</div>

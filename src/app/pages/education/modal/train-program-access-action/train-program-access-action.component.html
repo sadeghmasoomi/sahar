@@ -1,0 +1,115 @@
+<p class="h3">تعریف شرکت کننده</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="number" [(ngModel)]="formData.Score"  [ngModelOptions]="{standalone: true}" placeholder="امتیاز دوره" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="number" [(ngModel)]="formData.DepositID"  [ngModelOptions]="{standalone: true}" placeholder="شناسه پرداخت" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <mat-select placeholder="اعتباری"  [(ngModel)]="formData.ISCredit">
+      <mat-option [value]="true">بله</mat-option>
+      <mat-option [value]="false">خیر</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <mat-select placeholder="چند درسی"  [(ngModel)]="formData.IsmanyLesson">
+      <mat-option [value]="true">بله</mat-option>
+      <mat-option [value]="false">خیر</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <mat-select placeholder="چند آدرسی"  [(ngModel)]="formData.IsmanyAddress">
+      <mat-option [value]="true">بله</mat-option>
+      <mat-option [value]="false">خیر</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <mat-select placeholder="نیاز به معرفی"  [(ngModel)]="formData.IsRegister">
+      <mat-option [value]="true">بله</mat-option>
+      <mat-option [value]="false">خیر</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="number" [(ngModel)]="formData.Amount"  [ngModelOptions]="{standalone: true}" placeholder="قیمت" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="number" [(ngModel)]="formData.MaxFirmRegister"  [ngModelOptions]="{standalone: true}" placeholder="تعداد مجاز هر موسسه" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field  fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <mat-select placeholder="گروه کاربر"  [(ngModel)]="formData.UserGroupRankGcode">
+      <mat-option [value]="11">شریک</mat-option>
+      <mat-option [value]="12">شاغل انفرادی</mat-option>
+      <mat-option [value]="13">شاغل در استخدام موسسات</mat-option>
+      <mat-option [value]="14">غیر شاغل</mat-option>
+      <mat-option [value]="15">شاغل در سازمان حسابرسی</mat-option>
+      <mat-option [value]="111">کارورز</mat-option>
+      <mat-option [value]="112">کمک حسابرس</mat-option>
+      <mat-option [value]="113">حسابرس</mat-option>
+      <mat-option [value]="114">حسابرس ارشد</mat-option>
+      <mat-option [value]="115">سرپرست حسابرسی</mat-option>
+      <mat-option [value]="116">سرپرست ارشد حسابرسی</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success-btn-click" *ngIf="active" (click)="ngOptionTrainAccess(2)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngOptionTrainAccess(1)">ذخیره</button>
+</div>
+
+
+
+
+
+
+
+
+
+

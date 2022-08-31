@@ -1,0 +1,134 @@
+<div *ngIf="reports.length > 0" class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="20" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="10">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="90">
+      <strong>نام شرکت</strong>
+    </div>
+  </div>
+  <div fxFlex="80" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>شناسه ملی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>پایان سال مالی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>اظهار نظر</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شماره قرارداد</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>تاریخ قرارداد</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نوع قرارداد</strong>
+    </div>
+  </div>
+</div>
+<mat-accordion *ngIf="reports.length > 0">
+  <mat-expansion-panel *ngFor="let item of reports; let index = index" class="member-card">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="20" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="10">
+          <strong>{{ index + 1}}</strong>
+        </div>
+        <div fxFlex="90">
+          {{item.CustomerName}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="80" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="50">
+          {{item.NationalID}}
+        </div>
+        <div fxFlex="50">
+          {{item.DurationDateEnd | dateType}}
+        </div>
+        <div fxFlex="50">
+          {{item.OpinionName | dateType}}
+        </div>
+        <div fxFlex="50">
+          {{item.TreatyNo}}
+        </div>
+        <div fxFlex="50">
+          {{item.TreatyDate  | dateType}}
+        </div>
+        <div fxFlex="50">
+          {{item.ActivityName}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="mt-16">
+      <div fxFlex="100" fxLayoutAlign="end center">
+        <button mat-raised-button class="btn-add-success ml-12" (click)="ngChangeStatus(item, false)">تایید</button>
+        <button mat-raised-button class="color-btn-warn ml-12" (click)="ngChangeStatus(item, true)">عدم تایید</button>
+        <button type="submit" (click)="ngGetPdf(item)"   mat-raised-button class="color-btn-click ml-8">نمایش گزارش</button>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>تاریخ امضا صورت های مالی :</strong>
+          {{item.StatementDate | dateType}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>تاریخ گزارش :</strong>
+          {{item.AuditReportDate | dateType}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>تاریخ ارسال گزارش :</strong>
+          {{item.AuditReportSendDate | dateType}}
+        </p>
+      </div>
+
+
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>زمان شروع کار :</strong>
+          {{item.WorkStartDate | dateType}}
+        </p>
+      </div>
+
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>زمان پایان کار :</strong>
+          {{item.WorkEndDate | dateType}}
+        </p>
+      </div>
+
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>ساعت واقعی :</strong>
+          {{item.FinalTime}}
+        </p>
+      </div>
+
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>مبلغ نهایی :</strong>
+          {{item.FinalAmount | number}}
+        </p>
+      </div>
+
+      <div class="mt-12" fxFlex="25">
+        <p>
+          <strong>امضا :</strong>
+          {{item.SingnName1}}
+        </p>
+      </div>
+      <div class="mt-12" fxFlex="25" *ngIf="item.SingnName2">
+        <p>
+          <strong>امضا دیگر :</strong>
+          {{item.SingnName2}}
+        </p>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<div *ngIf="active && reports.length == 0">
+  <p class="empty-text">موردی برای مشاهده وجود ندارد</p>
+</div>

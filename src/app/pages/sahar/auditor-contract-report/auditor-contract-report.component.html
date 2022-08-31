@@ -1,0 +1,176 @@
+<div>
+    <form class="form-search-filter" fxFlex="row" fxLayoutAlign="end center">
+        <div class="search-wrapper search-center">
+            <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+                <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با شناسه و نام شرکت...">
+                <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)">
+                  <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="30" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="10">
+            <strong>ردیف</strong>
+        </div>
+        <div fxFlex="90" class="pr-36">
+            <strong>نام موسسه</strong>
+        </div>
+    </div>
+    <div fxFlex="70" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="33.33333">
+        <strong>نوع قرارداد</strong>
+      </div>
+      <div fxFlex="33.33333">
+        <strong>سال</strong>
+      </div>
+      <div fxFlex="33.33333">
+            <strong>شناسه ملی</strong>
+        </div>
+    </div>
+</div>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let item of firmContractReportData; let index = index" class="member-card">
+        <mat-expansion-panel-header>
+            <mat-panel-title fxFlex="30" fxLayout="row" fxLayoutAlign="start">
+                <div fxFlex="10">
+                    <strong>{{1 + (index + ((pageNumber-1) * 20))}}</strong>
+                </div>
+                <div fxFlex="90">
+                    {{item.Name}}
+                </div>
+            </mat-panel-title>
+            <mat-panel-description fxFlex="70" fxLayout="row" fxLayoutAlign="start">
+                <div fxFlex="33.33333">
+                    {{item.ActivityName}}
+                </div>
+              <div fxFlex="33.33333">
+                {{item.DurationDateYear}}
+              </div>
+                <div fxFlex="33.33333">
+                    {{item.NationalID}}
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-16">
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>شماره قرارداد :</strong>
+                    {{item.TreatyNo}}
+                </p>
+            </div>
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>تاریخ قرارداد :</strong>
+                    {{item.TreatyDate | dateType}}
+                </p>
+            </div>
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>تاریخ امضاء قرارداد :</strong>
+                    {{item.SignDate | dateType}}
+                </p>
+            </div>
+
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>سال مالی منتهی به :</strong>
+                    {{item.DurationDateEnd | dateType}}
+                </p>
+            </div>
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>تاریخ مجمع :</strong>
+                    {{item.GAssemblyDate | dateType}}
+                </p>
+            </div>
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>ساعت بودجه :</strong>
+                    {{item.BudjetHorse}}
+                </p>
+            </div>
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>مبلغ قرارداد :</strong>
+                    {{item.amount | number}}
+                </p>
+            </div>
+
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>وضعیت قرارداد :</strong>
+                    {{item.StatusName}}
+                </p>
+            </div>
+            <div class="content-member" fxFlex="25">
+                <p>
+                    <strong>تسویه حساب مالی : </strong>
+                    <span *ngIf="!item.FirmActivition" class="text-warn">تسویه نشده</span>
+                    <span *ngIf="item.FirmActivition" class="text-success">تسویه شده</span>
+                </p>
+            </div>
+            <div  class="mb-16" fxFlex="100" fxLayoutAlign="end center">
+                <button type="submit" (click)="ngReportContract(item)"   mat-raised-button class="color-btn-primary-400 ml-8">نمایش اطلاعات گزارش</button>
+            </div>
+          <div *ngIf="item.data" class="content-member" fxFlex="25">
+            <p>
+              <strong>تاریخ صورت های مالی :</strong>
+              {{item.data.StatementDate | dateType}}
+            </p>
+          </div>
+            <div *ngIf="item.data" class="content-member" fxFlex="25">
+                <p>
+                    <strong>تاریخ ارسال گزارش :</strong>
+                    {{item.data.AuditReportSendDate | dateType}}
+                </p>
+            </div>
+            <div *ngIf="item.data" class="content-member" fxFlex="25">
+                <p>
+                    <strong>نوع اظهار نظر :</strong>
+                    {{item.data.OpinionName}}
+
+                </p>
+            </div>
+
+          <div *ngIf="item.data" class="content-member" fxFlex="25">
+            <p>
+              <strong>تاریخ گزارش :</strong>
+              {{item.data.AuditReportDate | dateType}}
+            </p>
+          </div>
+          <div *ngIf="item.data" class="content-member" fxFlex="25">
+            <p>
+              <strong>وضعیت گزارش :</strong>
+              {{item.data.StatusName }}
+            </p>
+          </div>
+            <div *ngIf="item.data" class="content-member" fxFlex="25">
+                <p>
+                    <strong> امضا اول :</strong>
+                    {{item.data.SignName1}}
+                </p>
+            </div>
+            <div *ngIf="item.data" class="content-member" fxFlex="25">
+                <p>
+                    <strong> امضا دوم :</strong>
+                    {{item.data.SignName2 ? item.data.SignName2 : 'ندارد'}}
+                </p>
+            </div>
+<!--            <div *ngIf="item.data" class="content-member" fxFlex="25">-->
+<!--                <p>-->
+<!--                    <strong>توضیحات :</strong>-->
+<!--                    {{item.data.Comment}}-->
+<!--                </p>-->
+<!--            </div>-->
+
+          <div fxFlex="100" fxLayoutAlign="end center" *ngIf="item.data">
+            <button type="submit" (click)="ngGetPdf(item)" mat-raised-button class="color-btn-click ml-8">نمایش گزارش</button>
+          </div>
+
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
+<app-pagination [dataPage]="firmContractReport" [pageNumberValue]="params.get('pageNumber')? params.get('pageNumber'): 1" urlRouter="Sahar/AuditorContractReport" [nameSearch]="params.get('nameSearch')"></app-pagination>

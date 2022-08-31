@@ -1,0 +1,52 @@
+<div class="pb-24 h3">سایر اطلاعات
+  <small>(ارقام به میلیون ریال)</small>
+</div>
+<div fxLayout="row"
+     fxLayoutAlign="center start"
+     fxLayoutGap="12px">
+  <div fxFlex="100"
+       fxLayout="column"
+       fxLayoutAlign="center start"
+       fxLayoutGap="12px" *ngFor="let item of description">
+    <mat-card class="card-color-white-blue w-100-percentage mb-12" fxLayout="column"
+              fxLayoutAlign="center start"
+              fxLayoutGap="12px">
+      <mat-card-header class="w-100-percentage" fxFlex="100" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="12px">
+        <mat-card-title fxFlex="33" fxLayoutAlign="start center" class="h4 header-title"><span *ngIf="item.Header">{{item.Header}}</span></mat-card-title>
+        <mat-card-title fxFlex="33" dir=ltr fxLayoutAlign="center center" class="h4 mb-0 header-title">{{newDate}}</mat-card-title>
+        <mat-card-title fxFlex="33" dir=ltr fxLayoutAlign="center center" class="h4 mb-0 header-title">{{lastDate}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    <div class="w-100-percentage mb-12" fxLayout="column"
+         fxLayoutAlign="center start"
+         fxLayoutGap="12px"
+         *ngFor="let subItem of item.Titles">
+      <mat-card class="w-100-percentage">
+        <mat-card-header>
+          <mat-card-title class="h4 header-title mb-24">{{subItem.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="field" *ngFor="let sub of subItem.subTitle">
+            <div fxFlex="50" fxLayout="row wrap">
+              <p>{{sub.faName}} :</p>
+            </div>
+            <div fxFlex="60%" fxLayout="row wrap" fxLayoutAlign="start">
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" *ngIf="sub.enName === 'GnrUnitGCode'">{{formsData[sub.enName]}}</p>
+                  <p class="calculator-fild" *ngIf="sub.enName !== 'GnrUnitGCode'" [ngClass]="{'setPerens' : isNegitive(formsData[sub.enName])}">{{formsData[sub.enName] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+              <div fxFlex="50%">
+                <div class="calculator-box">
+                  <p class="calculator-fild" *ngIf="sub.enName === 'GnrUnitGCode'">{{formsData[sub.enName]}}</p>
+                  <p class="calculator-fild" *ngIf="sub.enName !== 'GnrUnitGCode'" [ngClass]="{'setPerens' : isNegitive(formsDataTwe[sub.enName])}">{{formsDataTwe[sub.enName] | negToPosSahar | number}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

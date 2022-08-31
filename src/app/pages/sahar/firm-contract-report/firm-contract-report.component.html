@@ -1,0 +1,123 @@
+<div fxlayout="row" fxlayoutalign="end end">
+  <form class="form-search-filter-dialog">
+    <div class="search-wrapper search-center">
+      <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+        <input matInput (keyup)="applyFilter($event)" placeholder="جستجو با نام  یا شناسه ملی  ...">
+      </div>
+    </div>
+  </form>
+  <div title="دانلود اکسل" class="form-search-filter-dialog">
+    <button  mat-button  (click)="exportExcelSort()">
+فایل اکسل
+    </button>
+  </div>
+  <div>
+      <form  class="form-search-filter-date mb-12" >
+        <div class="search-wrapper-date">
+          <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+            <input [(ngModel)]="dates.one" [ngModelOptions]="{standalone: true}" placeholder="از سال">
+          </div>
+          <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+            <input [(ngModel)]="dates.twe" [ngModelOptions]="{standalone: true}" placeholder="تا سال">
+          </div>
+          <button mat-icon-button="" class="mat-icon-button" (click)="filterDate(dates)">
+            <mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon>
+          </button>
+        </div>
+      </form>
+
+  </div>
+</div>
+<br>
+<div >
+  <table id="InstitutionsExcel" class=" mat-elevation-z8 " mat-table [dataSource]="reportData">
+    <!--    <ng-container matColumnDef="Row">-->
+<!--      <th mat-header-cell *matHeaderCellDef> ردیف</th>-->
+<!--      <td mat-cell *matCellDef="let element; let index = index">-->
+<!--        {{this.PersonnelInfo.filter.length?  index + 1 : element.RowN}}-->
+<!--      </td>-->
+<!--    </ng-container>-->
+    <ng-container matColumnDef="row">
+              <th mat-header-cell *matHeaderCellDef>ردیف</th>
+              <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}}</td>
+            </ng-container>
+            <ng-container matColumnDef="ActivityName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>نوع گزارش</th>
+              <td mat-cell *matCellDef="let element"> {{element.ActivityName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Amount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>مبلغ قرارداد</th>
+              <td mat-cell *matCellDef="let element"> {{element.Amount }} </td>
+            </ng-container>
+            <ng-container matColumnDef="BudjetHorse">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>ساعت بودجه</th>
+              <td mat-cell *matCellDef="let element"> {{element.BudjetHorse }} </td>
+            </ng-container>
+            <ng-container matColumnDef="ContratCancel">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ابطال</th>
+              <td mat-cell *matCellDef="let element"> {{element.ContratCancel}} </td>
+            </ng-container>
+            <ng-container matColumnDef="DurationDateEnd">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>سال مالی</th>
+              <td mat-cell *matCellDef="let element"> {{element.DurationDateEnd | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="DurationDateYear" >
+              <th mat-header-cell *matHeaderCellDef>سال</th>
+              <td mat-cell *matCellDef="let element"> {{element.DurationDateYear}} </td>
+            </ng-container>
+            <ng-container matColumnDef="FinalAmount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>مبلغ نهایی</th>
+              <td mat-cell *matCellDef="let element"> {{element.FinalAmount}} </td>
+            </ng-container>
+            <ng-container matColumnDef="FinalTime">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>ساعت واقعی</th>
+              <td mat-cell *matCellDef="let element"> {{element.FinalTime}} </td>
+            </ng-container>
+            <ng-container matColumnDef="IsReport">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>دارای گزارش</th>
+              <td mat-cell *matCellDef="let element"> {{element.IsReport }} </td>
+            </ng-container>
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef>نام شرکت</th>
+              <td mat-cell *matCellDef="let element"> {{element.Name }} </td>
+            </ng-container>
+            <ng-container matColumnDef="NationalID">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>شناسه ملی</th>
+              <td mat-cell *matCellDef="let element"> {{element.NationalID}} </td>
+            </ng-container>
+            <ng-container matColumnDef="OpinionName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>نوع اظهار نظر</th>
+              <td mat-cell *matCellDef="let element"> {{element.OpinionName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="RsendDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>تاریخ ارسال گزارش</th>
+              <td mat-cell *matCellDef="let element"> {{element.RsendDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SendDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>تاریخ ارسال قرارداد به جامعه</th>
+              <td mat-cell *matCellDef="let element"> {{element.SendDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SignDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>تاریخ امضا قرارداد</th>
+              <td mat-cell *matCellDef="let element"> {{element.SignDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="TreatyDate" >
+              <th mat-header-cell *matHeaderCellDef>تاریخ قرارداد</th>
+              <td mat-cell *matCellDef="let element"> {{element.TreatyDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="TreatyNo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>شماره قرارداد</th>
+              <td mat-cell *matCellDef="let element"> {{element.TreatyNo}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+  <mat-paginator class="pagination"  pageSize="50" [pageSizeOptions]="[10,25,50,100,250]" showFirstLastButtons></mat-paginator>
+
+</div>
+
+
+
+
+
+

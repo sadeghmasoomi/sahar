@@ -1,0 +1,38 @@
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start" *ngIf="active && reportsList.length > 0">
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="10">
+      <strong>ایدی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نام شرکت</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نوع گزارش</strong>
+    </div>
+  </div>
+</div>
+<mat-accordion *ngIf="active && reportsList.length > 0">
+  <mat-expansion-panel *ngFor="let item of reportsList; let index = index" class="member-card">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="100" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="10">
+          <strong>  {{item.GCode}}</strong>
+        </div>
+        <div fxFlex="50">
+          {{item.Name}}
+        </div>
+        <div fxFlex="50">
+          {{item.GnrActivityKindGCode}}
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" fxLayoutAlign="start" class="pt-28">
+      <div class="mb-12" fxFlex="25">
+        <button type="submit" (click)="getUpdatePDFDes(item.GCode)"   mat-raised-button class="color-btn-click ml-8">نمایش گزارش و دانلود</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<div *ngIf="active && reportsList.length == 0">
+  <p class="empty-text">موردی برای مشاهده وجود ندارد</p>
+</div>

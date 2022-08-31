@@ -1,0 +1,65 @@
+@import "src/assets/scss/helpers/colors";
+.cardList > *{
+  margin-top: 100px;
+  & > * {
+    margin-bottom: 32px;
+    margin-left: 32px;
+  }
+  .card-company.active{
+    cursor: pointer;
+    height: auto;
+    min-height: 300px;
+    display: grid;
+    box-shadow: none !important;
+    background-color: $secondary;
+    &:hover{
+      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0px rgba(0, 0, 0, 0.14), 0 1px 3px 0px rgba(0, 0, 0, 0.12);
+      border: 1px solid #ddd;
+    }
+    .logo{
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      background: $white;
+      padding: 3px;
+    }
+    .header-title{
+      line-height: 2;
+    }
+    .mat-card-header{
+      line-height: 5;
+      .sub-header-title, .header-title{
+        color: $white;
+        .mat-icon{
+          color: $white;
+        }
+      }
+    }
+  }
+  .card-company{
+    cursor: pointer;
+    height: auto;
+    min-height: 300px;
+    display: grid;
+    &:hover{
+      box-shadow: none;
+      border: 1px solid #ddd;
+    }
+    .logo{
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      background: $secondary;
+      padding: 3px;
+    }
+    .header-title{
+      line-height: 2;
+    }
+    .mat-card-header{
+      line-height: 5;
+    }
+  }
+
+}

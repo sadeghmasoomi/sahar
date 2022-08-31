@@ -1,0 +1,131 @@
+<p class="h3">تعریف اطلاعات کلاس</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <div fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 mt-16 material-form-field">
+    <input name="someName" class="datepicker"  id="RegisterDateStart" [(ngModel)]="formData.RegisterDateStart"
+           (ngModelChange)="dateMode(formData.RegisterDateStart, 'RegisterDateStart')"
+           [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+    <label for="RegisterDateStart" class="material-form-field-label">تاریخ شروع ثبت نام</label>
+  </div>
+  <div fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 mt-16 material-form-field">
+    <input name="someName" class="datepicker"  id="RegisteDateEnd"
+           [(ngModel)]="formData.RegisteDateEnd"
+           (ngModelChange)="dateMode(formData.RegisteDateEnd, 'RegisteDateEnd')" [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+    <label for="RegisteDateEnd" class="material-form-field-label">تاریخ خاتمه ثبت نام</label>
+  </div>
+  <div fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 mt-16 material-form-field">
+    <input name="someName" class="datepicker" id="CourseStart"
+           [(ngModel)]="formData.CourseStart"
+           (ngModelChange)="dateMode(formData.CourseStart, 'CourseStart')" [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+    <label for="CourseStart" class="material-form-field-label">تاریخ شروع دوره</label>
+  </div>
+  <div fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 mt-16 material-form-field">
+    <input name="someName" class="datepicker" id="CourseEnd"
+           [(ngModel)]="formData.CourseEnd"
+           (ngModelChange)="dateMode(formData.CourseEnd, 'CourseEnd')" [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+    <label for="CourseEnd" class="material-form-field-label">تاریخ خاتمه دوره</label>
+  </div>
+  <div fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 mt-16 material-form-field">
+    <input name="someName" class="datepicker" id="CartStart"
+           [(ngModel)]="formData.CartStart"
+           (ngModelChange)="dateMode(formData.CartStart, 'CartStart')"
+           [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+    <label for="CartStart" class="material-form-field-label">تاریخ شروع دریافت کارت</label>
+  </div>
+  <div fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12 mt-16 material-form-field">
+    <input name="someName" class="datepicker" id="CartEnd"
+           [(ngModel)]="formData.CartEnd"
+           (ngModelChange)="dateMode(formData.CartEnd, 'CartEnd')"
+           [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+    <label for="CartEnd" class="material-form-field-label">تاریخ خاتمه دریافت کارت</label>
+  </div>
+  <mat-form-field fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="number" [(ngModel)]="formData.TotalHours"  [ngModelOptions]="{standalone: true}" placeholder="کل ساعت درس" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field fxFlex="50"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="number" [(ngModel)]="formData.Qty"  [ngModelOptions]="{standalone: true}" placeholder="تعداد دانشجو" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field fxFlex="100"
+                  fxFlex.sm="100"
+                  fxFlex.xs="100"
+                  fxLayout="column"
+                  class="mb-12">
+    <input type="text" placeholder="مدرس دوره (لطفا با نام خوانوادگی جستجو کنید)" matInput [(ngModel)]="formData.TeacherUserName" [matAutocomplete]="auto">
+    <mat-icon class="mat-icon iconSearch" (click)="getTeachers(formData.TeacherUserName, false)" role="img" aria-hidden="true">search</mat-icon>
+  </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let teacher of teachers"  (click)="ngSelectTeachers(teacher)">{{teacher.Name}}</mat-option>
+  </mat-autocomplete>
+  <mat-form-field fxFlex="100"
+                  fxFlex.sm="100"
+                  fxFlex.xs="100"
+                  fxLayout="column"
+                  class="mb-12">
+    <textarea matInput rows="4" [(ngModel)]="formData.TimeProgram"  [ngModelOptions]="{standalone: true}" placeholder="زمانبندی برنامه درسی" autocomplete="off"></textarea>
+  </mat-form-field>
+  <mat-form-field fxFlex="100"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <textarea matInput rows="4" [(ngModel)]="formData.Comment"  [ngModelOptions]="{standalone: true}" placeholder="یادداشت" autocomplete="off"></textarea>
+  </mat-form-field>
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="active" (click)="ngOptionProgram(2)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="!active" (click)="ngOptionProgram(1)">ذخیره</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

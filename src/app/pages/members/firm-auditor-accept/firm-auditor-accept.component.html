@@ -1,0 +1,150 @@
+<div class="filters">
+  <div class="filters-content">
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <div fxFlex="20">
+        <form class="form-search-filter">
+          <div class="search-wrapper">
+            <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+              <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با نام شرکت یا شماره ثبت ...">
+              <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="40" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>نام</strong>
+    </div>
+  </div>
+  <div fxFlex="60" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>شناسه ملی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>کد عضویت</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>وضعیت شرکت</strong>
+    </div>
+  </div>
+</div>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of firmsConnect | async; let index = index" class="member-card" (opened)="getMemberData(item)" >
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="40" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="50">
+          <strong>{{index + 1}}</strong>
+        </div>
+        <div fxFlex="50">
+          {{item.Name !=''?item.Name:'نام‌مشخص'}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="60" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="50">
+          {{item.NationalID}}
+        </div>
+        <div fxFlex="50">
+          {{item.Code !=''?item.Code:'نام‌مشخص'}}
+        </div>
+        <div fxFlex="50">
+          {{item.GnrFirmstatusGcode !=''?item.GnrFirmstatusGcode:'نام‌مشخص'}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" class="mt-12" fxLayoutAlign="start">
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>تاریخ ثبت :</strong>
+          {{item.TradeDate | dateType }}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>تاریخ توقف :</strong>
+          {{item.EndJDate | dateType }}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>آدرس پست الکترونیکی :</strong>
+          {{item.Email !=''?item.Email:'نام‌مشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>سال مال :</strong>
+          {{item.YearDuration}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>وضعیت :</strong>
+          {{item.GnrFirmstatusGcode !=''?item.GnrFirmstatusGcode:'نام‌مشخص'}}
+        </p>
+      </div>
+      <h3 fxFlex="100">سوابق در موسسه ({{item.Name}}) :</h3>
+      <div class="table-fixed mat-elevation-z8 w-100-percentage mb-24">
+        <table style="overflow: auto" class="border-radius-8 text-center" mat-table [dataSource]="item.memberData">
+          <ng-container class="text-center" matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              {{i + 1}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StartJdate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.StartJdate">{{element.StartJdate | dateType}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="EndJdate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ پایان</th>
+            <td mat-cell *matCellDef="let element">
+              <span>{{element.EndJdate | dateType}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StatusName">
+            <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+            <td mat-cell *matCellDef="let element">
+              <span>{{element.StatusName}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="Dsc">
+            <th mat-header-cell *matHeaderCellDef>توضیحات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span>{{element.Dsc}}</span>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="operasion">
+            <th mat-header-cell *matHeaderCellDef>عملیات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <button mat-mini-fab class="btn-add-success ml-12" matTooltip="تایید"
+                      (click)="activeMemberFirmFlow(element, item, 20)" *ngIf="element.StatusGCode == 10">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-mini-fab class="color-btn-warn ml-12" matTooltip="عدم تایید"
+                      (click)="activeMemberFirmFlow(element, item, 21)" *ngIf="element.StatusGCode == 10">
+                <mat-icon>close</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayInfoFlow , sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplayInfoFlow;"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  showFirstLastButtons
+  class="mt-12"
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 30, 40, 50, 60, 70, 80, 90, 100]">
+</mat-paginator>

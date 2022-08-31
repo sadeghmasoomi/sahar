@@ -1,0 +1,77 @@
+<div fxLayout="row" fxLayoutAlign="end">
+  <div fxFlex="30%">
+    <form class="form-search-filter">
+      <div class="search-wrapper search-center">
+        <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+          <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با نام خانوادگی یا کد عضویت ...">
+          <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div>
+  <div class="card-content">
+    <div class="mat-elevation-z8">
+      <table class="border-radius-8 table-font-small" mat-table matSort [dataSource]="saharContract">
+        <ng-container class="text-center" matColumnDef="Position">
+          <th mat-header-cell *matHeaderCellDef> ردیف </th>
+          <td mat-cell *matCellDef="let element; let i = index;">
+            {{i + 1}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="AuditorName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>نام حسابرس</th>
+          <td mat-cell *matCellDef="let element"> {{element.AuditorName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="CustomerName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>نام شرکت</th>
+          <td mat-cell *matCellDef="let element"> {{element.CustomerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="CustomerNationalID">
+          <th mat-header-cell *matHeaderCellDef>شناسه ملی</th>
+          <td mat-cell *matCellDef="let element"> {{element.CustomerNationalID}} </td>
+        </ng-container>
+        <ng-container matColumnDef="DurationDateEnd">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>پایان سال مالی</th>
+          <td mat-cell *matCellDef="let element"> {{element.DurationDateEnd | dateType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="LastYear">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>سال قبلی</th>
+          <td mat-cell *matCellDef="let element"> {{element.LastYear}} </td>
+        </ng-container>
+        <ng-container matColumnDef="AvgHAmount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>مبلغ قرارداد</th>
+          <td mat-cell *matCellDef="let element"> {{element.amount | number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="LastAmount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>مبلغ قرارداد قبلی</th>
+          <td mat-cell *matCellDef="let element"> {{element.LastAmount | number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="LastAuditor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>حسابرس قبلی</th>
+          <td mat-cell *matCellDef="let element"> {{element.LastAuditor}} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>نرخ ساعتی</th>
+          <td mat-cell *matCellDef="let element"> {{element.AvgHAmount | number}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ActivityName">
+          <th mat-header-cell *matHeaderCellDef>نوع خدمت</th>
+          <td mat-cell *matCellDef="let element"> {{element.ActivityName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="StatusName">
+          <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+          <td mat-cell *matCellDef="let element"> {{element.StatusName}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+      <app-pagination *ngIf="active && saharContract.length > 0"
+                      [dataPage]="saharContractPage"
+                      [pageNumberValue]="params.get('pageNumber')? params.get('pageNumber'): 1"
+                      urlRouter="SaharControl/IacpaContractControled"
+                      [nameSearch]="params.get('nameSearch')" ></app-pagination>
+    </div>
+  </div>
+</div>

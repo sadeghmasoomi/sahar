@@ -1,0 +1,20 @@
+<div class="holder">
+  <div class="news">
+    <marquee style="direction: ltr" class="marquee" behavior="scroll" direction="right" >
+     <span *ngFor="let item of messages">
+          <strong>
+            {{item.Title}} :
+          </strong>
+          <span>
+            {{item.Comment}}
+          </span>
+      </span>
+    </marquee>
+  </div>
+</div>
+<div class="breadcrumb accent p-12 h-100 mt-24" fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxLayout="column" fxLayoutAlign="center start">
+    <div class="h2 ">{{titleBreadcrumb}}</div>
+  </div>
+</div>
+<div class="top-bg accent"></div>

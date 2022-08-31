@@ -1,0 +1,60 @@
+<div class="text-left btn-group-header">
+  <button mat-raised-button class="color-btn-warn"  routerLink="/SaharMember/MemberAuditor">بازگشت
+    <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">arrow_back</mat-icon>
+  </button>
+</div>
+<mat-card>
+  <mat-card-content>
+    <div fxLayoutAlign="row" *ngIf="lastCode.length < 10">
+      <div fxFlex="100">
+        <p>
+          <strong>آخرین کدعضویت :</strong>
+          {{lastCode}}
+        </p>
+      </div>
+    </div>
+    <form #myForm="ngForm"
+          (ngSubmit)="sendMemberNew(myForm,edit ? 2 : 1)"
+          fxLayout="row wrap" fxLayoutAlign="start center">
+      <div *ngFor="let item of forms; let index = index" fxFlex="25"
+           fxFlex.md="33.33333"
+           fxFlex.sm="41.66667%"
+           fxFlex.xs="100"
+           fxLayout="column">
+        <mat-form-field *ngIf="item.type !== 'date'">
+          <input *ngIf="!item.data" matInput
+                 [placeholder]="item.faName"
+                 [(ngModel)]="formData[item.enName]"
+                 [required]="item.required"
+                 [name]="item.enName"
+                 autocomplete="off">
+          <mat-select *ngIf="item.data"
+                      [placeholder]="item.faName"
+                      [(ngModel)]="formData[item.enName]"
+                      [required]="item.required"
+                      [name]="item.enName">
+            <mat-option *ngIf="item.search">
+              <ngx-mat-select-search
+                [ngModelOptions]="{standalone: true}"
+                placeholderLabel="جستجو..."
+                noEntriesFoundLabel="'موردی یافت نشد لطفا با استفاده از x متن را پا کنید.'"
+                ngModel (ngModelChange)="filterMyOptions($event, index)"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+        <div *ngIf="item.type === 'date'" class="mb-12 mt-16 material-form-field">
+          <input [name]="item.enName" class="datepicker" [id]="item.enName"
+                 [(ngModel)]="formData[item.enName]"
+                 [dpDayPicker]="datePickerConfig" theme="dp-material">
+          <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+        </div>
+      </div>
+      <div class="text-left" fxFlex="100">
+        <button *ngIf="!edit" mat-raised-button class="btn-success">افزودن</button>
+        <button *ngIf="edit" mat-raised-button class="btn-success">ویرایش</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

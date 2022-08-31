@@ -1,0 +1,287 @@
+<form class="form-search-filter">
+  <div class="search-wrapper search-center">
+    <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+      <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با نام خانوادگی یا کد عضویت ...">
+      <button mat-icon-button class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+    </div>
+  </div>
+</form>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="15" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="25">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="75">
+      <strong> کد عضویت</strong>
+    </div>
+
+  </div>
+  <div fxFlex="85" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong> نام </strong>
+    </div>
+    <div fxFlex="50">
+      <strong> نام خانوادگی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شماره ملی</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شماره همراه</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>وضعیت </strong>
+    </div>
+    <div fxFlex="50">
+      <strong>اطلاعات</strong>
+    </div>
+  </div>
+</div>
+<div class="text-left mb-12">
+  <button mat-raised-button class="color-btn-primary-500" (click)="exportExcel()">اکسل</button>
+</div>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of MembersListConnect | async; let index = index" class="member-card"
+                       (opened)="ngGetMemberData(item)">
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="15" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="25">
+          <strong>{{index + 1}}</strong>
+        </div>
+        <div fxFlex="75">
+          {{item.Code}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="85" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="50">
+          {{item.FName}}
+        </div>
+        <div fxFlex="50">
+          {{item.LName}}
+        </div>
+        <div fxFlex="50">
+          {{item.NationalCode !==''? item.NationalCode: 'نامشخص'}}
+        </div>
+        <div fxFlex="50">
+          {{item.Mobaile !=''?item.Mobaile:'نامشخص'}}
+        </div>
+        <div fxFlex="50">
+          {{item.MemGroupRankName}}
+        </div>
+        <div fxFlex="50">
+          {{item.StatusName}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap" class="mt-24" fxLayoutAlign="start">
+      <div fxFlex="100" class="mt-12 mb-12" fxLayoutAlign="end">
+<!--        item.StatusGcode == 10-->
+        <div class="btn-group-box ml-12" *ngIf="false">
+          <button mat-raised-button class="btn-add-success ml-12" (click)="acceptMember(item.GCode, 20)">تایید </button>
+          <button mat-raised-button class="color-btn-warn" (click)="acceptMember(item.GCode, 21)">عدم تایید </button>
+        </div>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>نام پدر :</strong>
+          {{item.FatherName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>تاریخ تولد :</strong>
+          {{item.BirthJDate | dateType}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>محل صدور شناسنامه :</strong>
+          {{item.IdCityName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>محل تولد :</strong>
+          {{item.BirthCityName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>جنسیت :</strong>
+          {{item.GnrSexName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>مذهب :</strong>
+          {{item.GnrReligionName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>وضعیت تأهل :</strong>
+          {{item.GnrMarriedName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>تاریخ شروع :</strong>
+          {{item.StartJdate | dateType}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>نظام وظیفه :</strong>
+          {{item.GnrmilitaryName}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>شناسه ملی :</strong>
+          {{item.NationalCode !=''?item.NationalCode:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>شماره بیمه :</strong>
+          {{item.InsuranceCode !=''?item.InsuranceCode:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>شماره مدرک :</strong>
+          {{item.DocNo !=''?item.DocNo:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>تاریخ مدرک :</strong>
+          {{item.DocJdate | dateType}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>نام شهر :</strong>
+          {{item.GnrCityName !=''?item.GnrCityName:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="70">
+        <p>
+          <strong>آدرس منزل :</strong>
+          {{item.HomeAdress !=''?item.HomeAdress:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="30">
+        <p>
+          <strong>کد پستی :</strong>
+          {{item.HZipCode !=''?item.HZipCode:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="100">
+        <p>
+          <strong>آدرس محل کار :</strong>
+          {{item.WorkAdress !=''?item.WorkAdress:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>کد پستی محل کار :</strong>
+          {{item.WZipCode !=''?item.WZipCode:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>شماره تلفن محل سکونت :</strong>
+          {{item.HomeTel !=''?item.HomeTel:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>شماره تماس محل کار :</strong>
+          {{item.WorkTel !=''?item.WorkTel:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>آدرس پست الکترونیکی :</strong>
+          {{item.EmailAdress !=''?item.EmailAdress:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+        <p>
+          <strong>گروه عضو :</strong>
+          {{item.MemGroupName !=''?item.MemGroupName:'نامشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="33">
+      </div>
+      <h3 fxFlex="100">سوابق در جامعه ({{item.FName + ' ' + item.LName}}) :</h3>
+      <table style="overflow: auto" class="border-radius-8 text-center" mat-table [dataSource]="item.dataValue">
+        <ng-container class="text-center" matColumnDef="Position">
+          <th mat-header-cell *matHeaderCellDef> ردیف </th>
+          <td mat-cell *matCellDef="let element; let i = index;">
+            {{i + 1}}
+          </td>
+        </ng-container>
+        <ng-container class="text-center" matColumnDef="StartJdate">
+          <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.StartJdate">{{element.StartJdate | dateType}}</span>
+          </td>
+        </ng-container>
+        <ng-container class="text-center" matColumnDef="EndJdate">
+          <th mat-header-cell *matHeaderCellDef>تاریخ پایان</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.StartJdate">{{element.EndJdate | dateType}}</span>
+          </td>
+        </ng-container>
+        <ng-container class="text-center" matColumnDef="KIndName">
+          <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.StartJdate">{{element.KIndName}}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="FirmName">
+          <th mat-header-cell *matHeaderCellDef>نام موسسه حسابرسی</th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <span *ngIf="element.StartJdate">{{element.FirmName && element.FirmName!==''? element.FirmName: ''}}</span>
+          </td>
+        </ng-container>
+        <ng-container class="text-center" matColumnDef="Dsc">
+          <th mat-header-cell *matHeaderCellDef>توضیحات</th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <span *ngIf="element.StartJdate">{{element.Dsc}}</span>
+          </td>
+        </ng-container>
+        <ng-container class="text-center" matColumnDef="StatusName">
+          <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <span *ngIf="element.StartJdate">{{element.StatusName}}</span>
+          </td>
+        </ng-container>
+        <ng-container class="text-center" matColumnDef="operasion">
+          <th mat-header-cell *matHeaderCellDef>عملیات</th>
+          <td mat-cell *matCellDef="let element; let index = index" class="text-center">
+            <button mat-mini-fab class="btn-add-success ml-12" matTooltip="تایید" (click)="activeMemberFlow(element, item, 20)" *ngIf="element.StartJdate && element.StatusGcode == 10 && !element.edit">
+              <mat-icon>done</mat-icon>
+            </button>
+            <button mat-mini-fab class="color-btn-warn ml-12" matTooltip="عدم تایید" (click)="activeMemberFlow(element, item, 21)" *ngIf="element.StartJdate && element.StatusGcode == 10 && !element.edit">
+              <mat-icon>close</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay , sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+    </div>
+    <div class="btn-group-box mt-16 mb-16 text-left">
+      <button mat-raised-button class="btn-add-success mr-16" [routerLink]="['/SaharMember/addMemberAuditor', item.Code]">ویرایش</button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  showFirstLastButtons
+  class="mt-12"
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 30, 40, 50, 60, 70, 80, 90, 100]">
+</mat-paginator>

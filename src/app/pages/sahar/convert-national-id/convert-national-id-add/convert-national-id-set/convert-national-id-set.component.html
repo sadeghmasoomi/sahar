@@ -1,0 +1,29 @@
+<div fxLayout="row" fxLayoutAlign="justify">
+  <h3 fxFlex="50">تاییده اطلاعات</h3>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <mat-form-field  fxFlex="100"
+                   fxFlex.md="100"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <input matInput type="text" [(ngModel)]="formData.Organization"  [ngModelOptions]="{standalone: true}" placeholder="نام ارگان" autocomplete="off">
+  </mat-form-field>
+  <mat-form-field  fxFlex="100"
+                   fxFlex.md="50"
+                   fxFlex.sm="100"
+                   fxFlex.xs="100"
+                   fxLayout="column"
+                   class="mb-12">
+    <textarea matInput type="text" [(ngModel)]="formData.Comment"  [ngModelOptions]="{standalone: true}"
+              placeholder="یاداشت" autocomplete="off"></textarea>
+  </mat-form-field>
+
+  <div fxFlex="100" fxLayoutAlign="end center">
+    <button mat-raised-button class="btn-success ml-12" (click)="addCustomer()">ثبت</button>
+    <button mat-raised-button class="color-btn-warn" (click)="onNoClick(false)">بستن</button>
+  </div>
+</div>
+

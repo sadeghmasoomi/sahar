@@ -1,0 +1,64 @@
+<div>
+  <form class="form-search-filter" fxFlex="row">
+    <div class="search-wrapper search-center" style="position: relative">
+      <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+        <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با شناسه و نام شرکت...">
+        <button mat-icon-button="" class="mat-icon-button" (click)="ngGetContract(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="card-content">
+  <div class="mat-elevation-z8 fix-table">
+    <table class="border-radius-8 table-font-small" mat-table [dataSource]="companyData">
+      <ng-container matColumnDef="row">
+        <th mat-header-cell *matHeaderCellDef>ردیف</th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>نام شرکت</th>
+        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="DurationDate">
+        <th mat-header-cell *matHeaderCellDef>سال مالی</th>
+        <td mat-cell *matCellDef="let element"> {{element.DurationJDate | dateType}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ActivityName">
+        <th mat-header-cell *matHeaderCellDef>نوع قرارداد</th>
+        <td mat-cell *matCellDef="let element"> {{element.ActivityName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="TreatyNo">
+        <th mat-header-cell *matHeaderCellDef>شماره قرارداد</th>
+        <td mat-cell *matCellDef="let element"> {{element.TreatyNo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>مبلغ قرارداد</th>
+        <td mat-cell *matCellDef="let element"> {{element.Amount | number}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ContractPosition">
+        <th mat-header-cell *matHeaderCellDef>وضعیت قرارداد</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.ContractPosition}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="ReportValid">
+        <th mat-header-cell *matHeaderCellDef>دارای گزارش</th>
+        <td mat-cell *matCellDef="let element">
+        {{element.ReportValid === 1 ? 'بله' : 'خیر'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="StatusName">
+        <th mat-header-cell *matHeaderCellDef>وضعیت گزارش</th>
+        <td mat-cell *matCellDef="let element"> {{element.ReportPosition}} </td>
+      </ng-container>
+      <ng-container matColumnDef="CoIsValid">
+        <th mat-header-cell *matHeaderCellDef>احراز هویت</th>
+        <td mat-cell *matCellDef="let element"> {{element.CoIsValid}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    </table>
+  </div>
+</div>
+
+

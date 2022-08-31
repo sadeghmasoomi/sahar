@@ -1,0 +1,33 @@
+<div fxLayout="row"
+     fxLayoutAlign="center start"
+     fxLayoutGap="12px">
+  <div  fxFlex="100" fxLayoutAlign="start justify" class="pb-24 h3">سهامداران موثر</div>
+</div>
+<div class="card-content">
+  <div class="mat-elevation-z8">
+    <table class="border-radius-8" mat-table [dataSource]="shareholders">
+      <ng-container matColumnDef="GnrFirmTypeGCode">
+        <th mat-header-cell *matHeaderCellDef>نوع شخصیت	</th>
+        <td mat-cell *matCellDef="let element"> {{element.GnrFirmTypeGCode ==350001? 'شخصیت حقوقی': 'شخصیت حقیقی'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>نام شخصیت</th>
+        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="NationalId">
+        <th mat-header-cell *matHeaderCellDef>شناسه یا کدملی</th>
+        <td mat-cell *matCellDef="let element"> {{element.NationalId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ShareQty">
+        <th mat-header-cell *matHeaderCellDef>تعداد سهام</th>
+        <td mat-cell *matCellDef="let element"> {{element.ShareQty}} </td>
+      </ng-container>
+      <ng-container matColumnDef="SharePercent">
+        <th mat-header-cell *matHeaderCellDef>درصد سهام</th>
+        <td mat-cell *matCellDef="let element"> {{element.SharePercent}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

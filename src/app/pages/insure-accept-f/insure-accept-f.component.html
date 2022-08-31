@@ -1,0 +1,54 @@
+<form class="form-search-filter">
+  <div class="search-wrapper search-center">
+    <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+      <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="جستجو با شناسه و نام شرکت...">
+      <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+    </div>
+  </div>
+</form>
+
+<mat-card>
+  <mat-card-content>
+    <table class="border-radius-8" mat-table [dataSource]="insure">
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>ردیف</th>
+        <td mat-cell *matCellDef="let element; let index = index">{{((pageNumber - 1)* 20 ) + (index + 1)}}</td>
+      </ng-container>
+      <ng-container matColumnDef="AuditorName">
+        <th mat-header-cell *matHeaderCellDef>موسسه حسابرسی</th>
+        <td mat-cell *matCellDef="let element"> {{element.AuditorName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="CustomerName">
+        <th mat-header-cell *matHeaderCellDef>نام شرکت</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.CustomerName}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="CustomerNationalID">
+        <th mat-header-cell *matHeaderCellDef>شناسه ملی شرکت</th>
+        <td mat-cell *matCellDef="let element"> {{element.CustomerNationalID}} </td>
+      </ng-container>
+      <ng-container matColumnDef="LastDurationJDate">
+        <th mat-header-cell *matHeaderCellDef>آخرین سال مالی</th>
+        <td mat-cell *matCellDef="let element"> {{element.LastDurationJDate | dateType}} </td>
+      </ng-container>
+      <ng-container matColumnDef="StatusCode">
+        <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.StatusCode == 0">ارسال نشده</span>
+          <span *ngIf="element.StatusCode == 1">ارسال شده به تامین اجتماعی</span>
+          <span *ngIf="element.StatusCode == 2">تایید تامین اجتماعی</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Active">
+        <th mat-header-cell *matHeaderCellDef>عملیات</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle [checked]="element.StatusCode == 2? true: false" (change)="ngChangeStatus(element, $event)"></mat-slide-toggle></td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns ,  sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+<app-pagination [dataPage]="insureData" [pageNumberValue]="params.get('pageNumber')? params.get('pageNumber'): 1" urlRouter="Insure/InsureAcceptF" [nameSearch]="params.get('nameSearch')"></app-pagination>

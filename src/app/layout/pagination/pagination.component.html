@@ -1,0 +1,47 @@
+<mat-card class="mt-16" *ngIf="pageCount > 1">
+  <mat-card-content>
+    <ul class="pagination mt-3 mb-3">
+      <li class="page-item" *ngIf="pageNumber!=1"
+          (click)="pageChange(1)">
+        <a class="page-link " aria-label="Previous">
+          <span class="btn-next-pre"><i class="fas fa-angle-double-right"></i></span>
+          <span class="sr-only">اول</span>
+        </a>
+      </li>
+      <li class="page-item" *ngIf="pageNumber!=1"
+          (click)="pageChange(pageNumber-1)">
+        <mat-icon class="nav-link-icon mat-icon">keyboard_arrow_right</mat-icon>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="pageNumber && (pageNumber-3>=1)"
+          (click)="pageChange(pageNumber-3)"><a class="page-link">{{pageNumber-3}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber-2>=1)"
+          (click)="pageChange(pageNumber-2)"><a class="page-link">{{pageNumber-2}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber-1>=1)"
+          (click)="pageChange(pageNumber-1)"><a class="page-link">{{pageNumber-1}}</a>
+      </li>
+      <li class="page-item "><a class="page-link active-Item">{{pageNumber}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber+1)<=pageCount"
+          (click)="pageChange(pageNumber+1)"><a class="page-link">{{pageNumber+1}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber+2)<=pageCount"
+          (click)="pageChange(pageNumber+2)"><a class="page-link">{{pageNumber+2}}</a>
+      </li>
+      <li class="page-item color-red-pagination" *ngIf="(pageNumber+3)<=pageCount"
+          (click)="pageChange(pageNumber+3)"><a class="page-link">{{pageNumber+3}}</a>
+      </li>
+      <li class="page-item" *ngIf="(pageNumber+1<=pageCount)"
+          (click)="pageChange(pageNumber+1)">
+        <mat-icon class="nav-link-icon mat-icon">keyboard_arrow_left</mat-icon>
+      </li>
+      <li class="page-item"
+          (click)="pageChange(pageCount)">
+        <a class="page-link" aria-label="Next">
+          <span class="sr-only">آخر</span>
+        </a>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

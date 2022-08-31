@@ -1,0 +1,23 @@
+<p class="h3">بارگذاری فایل ماده 169 </p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+    <div class="mb-24"
+         fxFlex="100"
+         fxLayout="column">
+      <div class="uploadfilecontainer" (click)="fileInputXsl.click()">
+        <p>فایل ماده 169 اکسل</p>
+        <input hidden type="file" name="file1" #fileInputXsl>
+      </div>
+<!--      <div  class="files-list" *ngIf="fileDataXlsx">-->
+<!--        <p> {{ fileDataXlsx.name }} </p>-->
+<!--      </div>-->
+    </div>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     fxLayoutGap="12px">
+  <div fxFlex="100" fxLayoutAlign="end justify">
+    <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+    <button mat-raised-button class="btn-add-success">تایید</button>
+  </div>
+</div>

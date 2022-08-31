@@ -1,0 +1,283 @@
+<div class="filters">
+  <div class="filters-content">
+    <div fxLayout="row" fxLayoutAlign="end center">
+<!--      <div fxFlex="15" class="slide-toggle">-->
+<!--        <mat-slide-toggle dir="ltr" [(ngModel)]="activeFirm" (change)="optionActiveFirm($event)">فقط موسسه های فعال</mat-slide-toggle>-->
+<!--      </div>-->
+      <div fxFlex="20">
+        <form class="form-search-filter">
+          <div class="search-wrapper">
+            <div class="search" fxFlex="" fxLayout="row" fxLayoutAlign="center center">
+              <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}" (keyup)="ngSearch(name)" placeholder="جستجو با نام شرکت یا شماره ثبت ...">
+              <button mat-icon-button="" class="mat-icon-button" (click)="ngSearch(name)"><mat-icon class="mat-icon" role="img" aria-hidden="true">search</mat-icon></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header-accordion" fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="40" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>ردیف</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>کد عضویت</strong>
+    </div>
+  </div>
+  <div fxFlex="60" fxLayout="row" fxLayoutAlign="start">
+    <div fxFlex="50">
+      <strong>نام</strong>
+    </div>
+    <div fxFlex="50">
+      <strong>شناسه ملی</strong>
+    </div>
+
+    <div fxFlex="50">
+      <strong>وضعیت شرکت</strong>
+    </div>
+  </div>
+</div>
+<div class="text-left mb-12">
+  <button mat-raised-button class="btn-success" routerLink="/SaharMember/addFirmAuditor">افزودن موسسه</button>
+</div>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let item of firmsConnect | async; let index = index" class="member-card" (opened)="getFirmsData(item)" >
+    <mat-expansion-panel-header>
+      <mat-panel-title fxFlex="40" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="50">
+          <strong>{{index + 1}}</strong>
+        </div>
+        <div fxFlex="50">
+          {{item.Code !=''?item.Code:'نام‌مشخص'}}
+        </div>
+      </mat-panel-title>
+      <mat-panel-description fxFlex="60" fxLayout="row" fxLayoutAlign="start">
+        <div fxFlex="50">
+          {{item.Name !=''?item.Name:'نام‌مشخص'}}
+        </div>
+        <div fxFlex="50">
+          {{item.NationalID}}
+        </div>
+        <div fxFlex="50">
+          {{item.GnrFirmstatusGcode !=''?item.GnrFirmstatusGcode:'نام‌مشخص'}}
+        </div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="btn-group-box mt-16 mb-16 text-left">
+      <button mat-raised-button class="color-btn-click mr-16" [routerLink]="['/SaharMember/addFirmAuditor', item.GCode]">ویرایش</button>
+    </div>
+    <div fxLayout="row wrap" class="mt-12" fxLayoutAlign="start">
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>تاریخ ثبت :</strong>
+          {{item.TradeDate | dateType }}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>تاریخ توقف :</strong>
+          {{item.EndJDate | dateType }}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>آدرس پست الکترونیکی :</strong>
+          {{item.Email !=''?item.Email:'نام‌مشخص'}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>سال مال :</strong>
+          {{item.YearDuration}}
+        </p>
+      </div>
+      <div class="content-member" fxFlex="25">
+        <p>
+          <strong>وضعیت :</strong>
+          {{item.GnrFirmstatusGcode !=''?item.GnrFirmstatusGcode:'نام‌مشخص'}}
+        </p>
+      </div>
+      <h3 fxFlex="100">سوابق در موسسه ({{item.Name}}) :</h3>
+      <div class="table-fixed mat-elevation-z8 w-100-percentage mb-24">
+        <table style="overflow: auto" class="border-radius-8 text-center" mat-table [dataSource]="item.memberData">
+          <ng-container class="text-center" matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              {{i + 1}}
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StartJdate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.StartJdate">{{element.StartJdate | dateType}}</span>
+              <div class="mb-12 mt-16 material-form-field" *ngIf="!element.StartJdate">
+                <input name="someName" class="datepicker" id="StartJdate"
+                       [(ngModel)]="formData.StartJdate"
+                       [dpDayPicker]="datePickerConfig"
+                       [ngModelOptions]="{standalone: true}"
+                       (ngModelChange)="dateMode(formData.StartJdate, 'StartJdate')"
+                       theme="dp-material" required="" autocomplete="off">
+                <label for="StartJdate" class="material-form-field-label"> تاریخ شروع *</label>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="EndJdate">
+            <th mat-header-cell *matHeaderCellDef>تاریخ پایان</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.StartJdate">{{element.EndJdate | dateType}}</span>
+              <div class="mb-12 mt-16 material-form-field" *ngIf="!element.StartJdate">
+                <input name="someName" class="datepicker" id="EndJdate"
+                       [(ngModel)]="formData.EndJdate"
+                       [dpDayPicker]="datePickerConfig"
+                       [ngModelOptions]="{standalone: true}"
+                       (ngModelChange)="dateMode(formData.EndJdate, 'EndJdate')"
+                       theme="dp-material" required="" autocomplete="off">
+                <label for="EndJdate" class="material-form-field-label">تاریخ پایان</label>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="StatusName">
+            <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.StartJdate">{{element.StatusName}}</span>
+              <mat-form-field *ngIf="!element.StartJdate">
+                <mat-select placeholder="وضعیت" [(ngModel)]="formData.GnrFirmStatusGCode" autocomplete="off" required [ngModelOptions]="{standalone: true}">
+                  <mat-option *ngFor="let rak of rankItems" [value]="rak.GCode">{{rak.Name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container class="text-center" matColumnDef="Dsc">
+            <th mat-header-cell *matHeaderCellDef>توضیحات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <span *ngIf="element.StartJdate">{{element.Dsc}}</span>
+              <mat-form-field *ngIf="!element.StartJdate">
+                <input matInput placeholder="توضیحات" [ngModelOptions]="{standalone: true}" [(ngModel)]="formData.Dsc" autocomplete="off">
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container class="text-center" matColumnDef="operasion">
+            <th mat-header-cell *matHeaderCellDef>عملیات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <button mat-mini-fab class="color-btn-primary-700 ml-12"
+                      (click)="activeMemberFirmFlow(element, item)"
+                      *ngIf="element.StartJdate && (element.StatusGCode == 1 || element.StatusGCode == 21)">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-mini-fab class="color-btn-warn"
+                      (click)="deleteFirmFlow(element.GCode, item)"
+                      *ngIf="element.StartJdate && (element.StatusGCode == 1 || element.StatusGCode == 21)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-mini-fab class="btn-success"
+                      (click)="ngAddFirmState(item)"
+                      *ngIf="!element.StartJdate">
+                <mat-icon>add</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayInfoFlow , sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplayInfoFlow;"></tr>
+        </table>
+      </div>
+      <h2 fxFlex="100" class="mt-12" *ngIf="item.dataValue">اطلاعات دفاتر :</h2>
+      <div fxFlex="100">
+        <div class="text-left mb-12">
+          <button mat-raised-button class="btn-success" (click)="ngAddFirmDtl(item)">افزودن اطلاعات دفاتر</button>
+        </div>
+      </div>
+      <div class="table-fixed mat-elevation-z8 w-100-percentage" *ngIf="item.dataValue">
+        <table class="border-radius-8" mat-table [dataSource]="item.dataValue">
+          <ng-container matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CityName">
+            <th mat-header-cell *matHeaderCellDef>نام شهر</th>
+            <td mat-cell *matCellDef="let element"> {{element.CityName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="BranchTradeNo">
+            <th mat-header-cell *matHeaderCellDef>شماره ثبت شعبه</th>
+            <td mat-cell *matCellDef="let element"> {{element.BranchTradeNo}}</td>
+          </ng-container>
+          <ng-container matColumnDef="BranchTradeDAte">
+            <th mat-header-cell *matHeaderCellDef>تاریخ ثبت شعبه</th>
+            <td mat-cell *matCellDef="let element">{{element.BranchTradeDAte | dateType }}</td>
+          </ng-container>
+          <ng-container matColumnDef="ZipCode">
+            <th mat-header-cell *matHeaderCellDef>کد پستی</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{element.ZipCode && element.ZipCode!==''? element.ZipCode: 'نامشخص'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="OfficeName">
+            <th mat-header-cell *matHeaderCellDef>نوع دفتر</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{element.OfficeName?element.OfficeName:'نامشخص'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Address">
+            <th mat-header-cell *matHeaderCellDef>آدرس</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{element.Address?element.Address:'نامشخص'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Tel">
+            <th mat-header-cell *matHeaderCellDef>شماره تماس</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{element.Tel?element.Tel:'نامشخص'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Fax">
+            <th mat-header-cell *matHeaderCellDef>شماه فکس</th>
+            <td mat-cell *matCellDef="let element" class="text-center">{{element.Fax?element.Fax:'نامشخص'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="operion">
+            <th mat-header-cell *matHeaderCellDef>عملیات</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <button mat-mini-fab class="btn-add-success ml-12" (click)="activeFirmAuditor(item, element.GCode)" *ngIf="!element.Active">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-mini-fab class="color-btn-primary-700 ml-12" (click)="ngAddFirmDtlUpdate(element, item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab class="color-btn-warn ml-12" *ngIf="!element.Active" (click)="deleteDtl(element.GCode)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns ,  sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <h2 fxFlex="100" class="mt-12" *ngIf="item.members" >شرکا و مدیران :</h2>
+      <div class="table-fixed mat-elevation-z8 w-100-percentage" *ngIf="item.members">
+        <table class="border-radius-8" mat-table [dataSource]="item.members">
+          <ng-container matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef> ردیف </th>
+            <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Code">
+            <th mat-header-cell *matHeaderCellDef>کد عضویت</th>
+            <td mat-cell *matCellDef="let element"> {{element.Code}}</td>
+          </ng-container>
+          <ng-container matColumnDef="FName">
+            <th mat-header-cell *matHeaderCellDef>نام</th>
+            <td mat-cell *matCellDef="let element"> {{element.FName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="LName">
+            <th mat-header-cell *matHeaderCellDef>نام خانوادگی</th>
+            <td mat-cell *matCellDef="let element"> {{element.LName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef>شریک</th>
+            <td mat-cell *matCellDef="let element">{{element.Name}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsMembers ,  sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsMembers;"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  showFirstLastButtons
+  class="mt-12"
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 30, 40, 50, 60, 70, 80, 90, 100]">
+</mat-paginator>

@@ -1,0 +1,29 @@
+<p class="h3">افزودن اطلاعات بیشتر</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <div *ngFor="let item of addForm" fxFlex="25"
+       fxFlex.md="33.33333"
+       fxFlex.sm="41.66667%"
+       fxFlex.xs="100"
+       fxLayout="column">
+    <mat-form-field *ngIf="item.type !== 'date'">
+      <input *ngIf="!item.data" matInput [placeholder]="item.faName" type="text" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}" [disabled]="item.disable" autocomplete="off">
+      <mat-select *ngIf="item.data" [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}">
+        <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="item.type === 'date'" class="mb-12 mt-16 material-form-field">
+      <input [name]="item.enName" class="datepicker" [id]="item.enName"
+             [(ngModel)]="formData[item.enName]"
+             (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+             [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+      <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+    </div>
+  </div>
+
+</div>
+<div class="text-left">
+  <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+  <button mat-raised-button class="btn-success" *ngIf="!edit" (click)="ngAddFirmDtl(formData, 1)">ذخیره</button>
+  <button mat-raised-button class="btn-success" *ngIf="edit" (click)="ngAddFirmDtl(formData, 2)">ذخیره</button>
+</div>

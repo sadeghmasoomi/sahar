@@ -1,0 +1,77 @@
+<p class="h3">افزودن فصل</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center">
+  <div *ngFor="let item of forms"
+       fxFlex="100"
+       fxFlex.md="100"
+       fxFlex.sm="100"
+       fxFlex.xs="100"
+       fxLayout="column">
+    <div class="mb-24" *ngIf="!item.data && item.type !== 'date'  && item.type !=='file' && item.type !== 'number'">
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="formData[item.enName]"
+          [ngModelOptions]="{standalone: true}"
+          [placeholder]="item.faName" [disabled]="item.disable">
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.type === 'number'" class="mb-24">
+      <mat-form-field>
+        <input matInput
+               [(ngModel)]="formData[item.enName]"
+               [ngModelOptions]="{standalone: true}"
+               type="number"
+               [disabled]="item.disable"
+               [placeholder]="item.faName" >
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.data">
+      <mat-form-field>
+        <mat-select
+          [placeholder]="item.faName"
+          [(ngModel)]="formData[item.enName]"
+          [ngModelOptions]="{standalone: true}" [disabled]="item.disable">
+          <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="item.type === 'date'"
+         class="mb-12 mt-16 material-form-field">
+      <input [name]="item.enName" class="datepicker" [disabled]="item.disable" [readOnly]="formData[item.enName] ? false : true"  [id]="item.enName" [(ngModel)]="formData[item.enName]"
+             (ngModelChange)="dateMode(formData[item.enName], item.enName)"
+             [dpDayPicker]="datePickerConfig" theme="dp-material" required>
+      <label [for]="item.enName" class="material-form-field-label">{{item.faName}}</label>
+    </div>
+  </div>
+<!--  <div class="mb-24"-->
+<!--       fxFlex="50"-->
+<!--       fxLayout="column">-->
+<!--    <div class="uploadfilecontainer" (click)="fileInputXsl.click()">-->
+<!--      <p>فایل ماده 169 اکسل</p>-->
+<!--      <input hidden type="file" name="file1" #fileInputXsl (change)="fileProgressXlsx($event.target)">-->
+<!--    </div>-->
+<!--    <div  class="files-list" *ngIf="fileDataXlsx">-->
+<!--      <p> {{ fileDataXlsx.name }} </p>-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="mb-24"
+       fxFlex="100"
+       fxLayout="column">
+    <div class="uploadfilecontainer" (click)="fileInputPdf.click()">
+      <p>فایل اظهارنامه ارزش افزوده</p>
+      <input hidden type="file" name="file2" #fileInputPdf (change)="fileProgressPdf($event.target)">
+    </div>
+    <div  class="files-list" *ngIf="fileDataPdf">
+      <p> {{ fileDataPdf.name }} </p>
+    </div>
+  </div>
+</div>
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     fxLayoutGap="12px">
+  <div fxFlex="100" fxLayoutAlign="end justify">
+    <button mat-raised-button class="color-btn-warn ml-8" (click)="onNoClick()">بستن</button>
+    <button mat-raised-button class="btn-add-success" (click)="onSubmit(data ? 2 : 1)">تایید</button>
+  </div>
+</div>

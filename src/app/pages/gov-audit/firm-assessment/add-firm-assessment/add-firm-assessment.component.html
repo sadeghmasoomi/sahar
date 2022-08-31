@@ -1,0 +1,51 @@
+<form  fxLayout="row wrap"
+       fxLayoutAlign="start center">
+  <div class="mb-24" *ngFor="let item of forms"
+       fxFlex="50%"
+       fxLayout="row wrap">
+    <div fxFlex="100" *ngIf="!item.data && item.enName !== 'DurationJdate'">
+      <mat-form-field>
+        <input matInput [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}" [disabled]="item.disable" [type]="item.type">
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" *ngIf="item.data &&
+           item.enName !='GnrCityGCodeAddress' &&
+           item.enName !='provinces'">
+      <mat-form-field>
+        <mat-select
+          [placeholder]="item.faName"
+          [(ngModel)]="formData[item.enName]"
+          [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let subItem of item.data" [value]="subItem.Value">{{subItem.Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" *ngIf="item.enName == 'provinces' && item.enName !='citeies'">
+      <mat-form-field>
+        <mat-select [placeholder]="item.faName"
+                    [(ngModel)]="provinces"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="selectProvinces(provinces)">
+          <mat-option *ngFor="let subItem of item.data" [value]="subItem.citeies">{{subItem.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" *ngIf="item.enName =='GnrCityGCodeAddress' && citeies">
+      <mat-form-field>
+        <mat-select [placeholder]="item.faName" [(ngModel)]="formData[item.enName]" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let subItem of citeies" [value]="subItem.Value">{{subItem.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" class="material-form-field" *ngIf="item.enName === 'DurationJdate'">
+      <input name="DurationDateStart"
+             id="DurationDateStart"
+             [dpDayPicker]="datePickerConfig"
+             theme="dp-material" class="datepicker" [(ngModel)]="formData[item.enName]"
+             (ngModelChange)="dateMode(formData[item.enName], item.enName)" required="">
+      <label for="DurationDateStart" class="material-form-field-label">{{item.faName}}</label>
+    </div>
+  </div>
+</form>
+<button *ngIf="!editActive" mat-raised-button  class="btn-success"  (click)="operation(1)">ذخیره</button>
+<button *ngIf="editActive" mat-raised-button  class="btn-success"  (click)="operation(2)">ذخیره</button>

@@ -1,0 +1,106 @@
+<div class="text-left btn-group-header">
+    <button mat-raised-button  routerLink="/Sahar/AuditReportProcess">بازگشت
+        <mat-icon class="s-16 mat-icon" role="img" aria-hidden="true">arrow_back</mat-icon>
+    </button>
+</div>
+<mat-card class="mb-24">
+    <mat-card-content>
+        <h3>قرارداد انتخاب شده</h3>
+        <div class="mat-elevation-z8 ">
+            <table class="border-radius-8" mat-table [dataSource]="reports">
+                <ng-container matColumnDef="CustomerName">
+                    <th mat-header-cell *matHeaderCellDef>نام شرکت</th>
+                    <td mat-cell *matCellDef="let element"> {{element.CustomerName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="NationalID">
+                    <th mat-header-cell *matHeaderCellDef>شناسه ملی</th>
+                    <td mat-cell *matCellDef="let element"> {{element.NationalID}} </td>
+                </ng-container>
+                <ng-container matColumnDef="DurationDateStart">
+                    <th mat-header-cell *matHeaderCellDef> شروع سال مالی</th>
+                    <td mat-cell *matCellDef="let element"> {{element.DurationDateStart | dateType}} </td>
+                </ng-container>
+              <ng-container matColumnDef="DurationDateEnd">
+                <th mat-header-cell *matHeaderCellDef>پایان سال مالی</th>
+                <td mat-cell *matCellDef="let element"> {{element.DurationDateEnd | dateType}} </td>
+              </ng-container>
+                <ng-container matColumnDef="TreatyNo">
+                    <th mat-header-cell *matHeaderCellDef>شماره قرارداد</th>
+                    <td mat-cell *matCellDef="let element"> {{element.TreatyNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="TreatyDate">
+                    <th mat-header-cell *matHeaderCellDef>تاریخ قرارداد</th>
+                    <td mat-cell *matCellDef="let element"> {{element.TreatyDate | dateType}} </td>
+                </ng-container>
+              <ng-container matColumnDef="ActivityName">
+                <th mat-header-cell *matHeaderCellDef>نوع قرارداد</th>
+                <td mat-cell *matCellDef="let element"> {{element.ActivityName}} </td>
+              </ng-container>
+              <ng-container matColumnDef="BudjetHorse">
+                <th mat-header-cell *matHeaderCellDef>ساعت بودجه</th>
+                <td mat-cell *matCellDef="let element"> {{element.BudjetHorse}} </td>
+              </ng-container>
+              <ng-container matColumnDef="FinalAmount">
+                <th mat-header-cell *matHeaderCellDef>مبلغ نهایی</th>
+                <td mat-cell *matCellDef="let element"> {{element.FinalAmount | number}} </td>
+              </ng-container>
+              <ng-container matColumnDef="ContractStatusName">
+                    <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ContractStatusName}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsReportToDisplay ,  sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsReportToDisplay;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+<div class="card-empty"  *ngIf="active && (!reports[0].StatusGCode || reports[0].StatusGCode === 0)">
+    <button mat-raised-button class="btn-add-success mb-0" routerLinkActive="disable-none" [routerLink]="['addReport']">افزودن گزارش</button>
+</div>
+<div class="card-content" *ngIf="active && reports[0].StatusGCode && reports[0].StatusGCode > 0">
+    <div class="table-fixed mat-elevation-z8 ">
+        <table class="border-radius-8" mat-table [dataSource]="reports">
+            <ng-container matColumnDef="StatementDate">
+                <th mat-header-cell *matHeaderCellDef>تاریخ صورت های مالی</th>
+                <td mat-cell *matCellDef="let element"> {{element.StatementDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="AuditReportDate">
+                <th mat-header-cell *matHeaderCellDef>تاریخ گزارش</th>
+                <td mat-cell *matCellDef="let element"> {{element.AuditReportDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="AuditReportSendDate">
+                <th mat-header-cell *matHeaderCellDef>تاریخ ارسال گزارش</th>
+                <td mat-cell *matCellDef="let element"> {{element.AuditReportSendDate | dateType}} </td>
+            </ng-container>
+            <ng-container matColumnDef="OpinionName">
+                <th mat-header-cell *matHeaderCellDef>اظهار نظر گزارش</th>
+                <td mat-cell *matCellDef="let element"> {{element.OpinionName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SingnName1">
+                <th mat-header-cell *matHeaderCellDef>امضای مدیر اول</th>
+                <td mat-cell *matCellDef="let element"> {{element.SingnName1}} </td>
+            </ng-container>
+            <ng-container matColumnDef="SingnName2">
+                <th mat-header-cell *matHeaderCellDef>امضای مدیر دوم</th>
+                <td mat-cell *matCellDef="let element"> {{element.SingnName2}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ReportStatusName">
+                <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+                <td mat-cell *matCellDef="let element"> {{element.ReportStatusName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="operation">
+                <th mat-header-cell *matHeaderCellDef> عملیات </th>
+                <td mat-cell *matCellDef="let element" class="text-center">
+                    <button mat-raised-button class="btn-add-success ml-12" [disabled]="element.StatusGCode !== 1 && element.StatusGCode !== 41 && element.StatusGCode !== 21 && element.StatusGCode !== 22" (click)="ngChangeStatus(element.GCode)">ارسال برای مدیر</button>
+                    <button mat-raised-button class="color-btn-click ml-12" [routerLink]="['ViewPdf', element.StatusGCode, element.GCode]">اطلاعات گزارش</button>
+                    <button mat-raised-button class="color-btn-warn" *ngIf="element.StatusGCode == 41 || element.StatusGCode == 42" (click)="openComment(element.Comment)">توضیحات </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay ,  sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+    </div>
+</div>
+<div class="child-section">
+    <router-outlet></router-outlet>
+</div>
