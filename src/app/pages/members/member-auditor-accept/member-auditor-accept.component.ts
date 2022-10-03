@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
-import {CallDataMembersService} from '../../../services/members/call-data.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { CallDataMembersService } from '../../../services/members/call-data.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-member-auditor-accept',
   templateUrl: './member-auditor-accept.component.html',
-  styleUrls: ['./member-auditor-accept.component.scss']
+  styleUrls: ['./member-auditor-accept.component.scss'],
 })
-export class MemberAuditorAcceptComponent{
+export class MemberAuditorAcceptComponent {
   MembersList!: MatTableDataSource<any>;
   MembersListData: any;
   MembersListConnect: any;
@@ -25,7 +25,10 @@ export class MemberAuditorAcceptComponent{
     'operasion',
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private callData: CallDataMembersService, private snackBar: MatSnackBar) {
+  constructor(
+    private callData: CallDataMembersService,
+    private snackBar: MatSnackBar
+  ) {
     this.ngGetMembers();
   }
 
@@ -34,6 +37,7 @@ export class MemberAuditorAcceptComponent{
       Kind: 'M22111',
     };
     this.callData.getSaharMembers(data).subscribe((members) => {
+      console.log('members==>', members);
       this.MembersListData = members.msg;
       this.MembersList = new MatTableDataSource<any>(this.MembersListData);
       this.MembersList.paginator = this.paginator;
@@ -61,7 +65,7 @@ export class MemberAuditorAcceptComponent{
         FirmInfoHdrGCode: element.FirmInfoHdrGCode,
         UserGroupRankGCode: element.UserGroupRankGCode,
         StatusGcode: status,
-        action: 21
+        action: 21,
       };
       this.callData.memberFlow(data).subscribe((res: any) => {
         if (res.state) {
@@ -69,7 +73,7 @@ export class MemberAuditorAcceptComponent{
             direction: 'rtl',
             verticalPosition: 'top',
             horizontalPosition: 'start',
-            panelClass: 'panel-success'
+            panelClass: 'panel-success',
           });
           this.ngGetMemberData(item);
         } else {
@@ -78,7 +82,7 @@ export class MemberAuditorAcceptComponent{
             direction: 'rtl',
             verticalPosition: 'top',
             horizontalPosition: 'start',
-            panelClass: 'panel-error'
+            panelClass: 'panel-error',
           });
         }
       });
@@ -102,7 +106,8 @@ export class MemberAuditorAcceptComponent{
         list['شماره ملی'] = item.NationalCode;
       }
       if (item.MemGroupRankName) {
-        list['وضعیت '] = item.MemGroupRankName !== '' ? item.MemGroupRankName : 'نامشخص';
+        list['وضعیت '] =
+          item.MemGroupRankName !== '' ? item.MemGroupRankName : 'نامشخص';
       }
       if (item.Accept) {
         list['اطلاعات '] = item.Accept ? 'تایید شده' : 'تایید نشده';
@@ -123,7 +128,7 @@ export class MemberAuditorAcceptComponent{
       const data = {
         GCode,
         StatusGcode: status,
-        action: 21
+        action: 21,
       };
       this.callData.sendMemberAction(data).subscribe((res: any) => {
         if (res.state) {
@@ -131,7 +136,7 @@ export class MemberAuditorAcceptComponent{
             direction: 'rtl',
             verticalPosition: 'top',
             horizontalPosition: 'start',
-            panelClass: 'panel-success'
+            panelClass: 'panel-success',
           });
           this.ngGetMembers();
         } else {
@@ -140,11 +145,10 @@ export class MemberAuditorAcceptComponent{
             direction: 'rtl',
             verticalPosition: 'top',
             horizontalPosition: 'start',
-            panelClass: 'panel-error'
+            panelClass: 'panel-error',
           });
         }
       });
     }
-
   }
 }
