@@ -1,0 +1,84 @@
+<div>
+  <form class="form-search-filter" fxFlex="row">
+    <div class="search-wrapper search-center" style="position: relative">
+      <div
+        class="search"
+        fxFlex=""
+        fxLayout="row"
+        fxLayoutAlign="center center"
+      >
+        <input
+          [(ngModel)]="name"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="جستجو کاربر..."
+          (keyup)="ngSearch(name)"
+        />
+        <mat-icon class="mat-icon" role="img" aria-hidden="true"
+          >search</mat-icon
+        >
+      </div>
+    </div>
+  </form>
+</div>
+<div class="card-content">
+  <div class="mat-elevation-z8 fix-table">
+    <table
+      class="border-radius-8 table-font-small"
+      mat-table
+      [dataSource]="usersNtsw"
+    >
+      <ng-container matColumnDef="row">
+        <th mat-header-cell *matHeaderCellDef>ردیف</th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>نام</th>
+        <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="FirmCode">
+        <th mat-header-cell *matHeaderCellDef>کد موسسه</th>
+        <td mat-cell *matCellDef="let element">{{ element.FirmCode }}</td>
+      </ng-container>
+      <ng-container matColumnDef="FirmName">
+        <th mat-header-cell *matHeaderCellDef>نام موسسه</th>
+        <td mat-cell *matCellDef="let element">{{ element.FirmName }}</td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="GenderName">
+        <th mat-header-cell *matHeaderCellDef>جنسیت</th>
+        <td mat-cell *matCellDef="let element">{{ element.GenderName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="SystemName">
+        <th mat-header-cell *matHeaderCellDef>سامانه</th>
+        <td mat-cell *matCellDef="let element">{{ element.SystemName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="RoleName">
+        <th mat-header-cell *matHeaderCellDef>نقش</th>
+        <td mat-cell *matCellDef="let element">{{ element.RoleName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="StartJdate">
+        <th mat-header-cell *matHeaderCellDef>تاریخ شروع</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.StartJdate | dateType }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="EndJdate">
+        <th mat-header-cell *matHeaderCellDef>تاریخ پایان</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.EndJdate | dateType }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="ActiveName">
+        <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+        <td mat-cell *matCellDef="let element">{{ element.ActiveName }}</td>
+      </ng-container> -->
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+    <mat-paginator
+      showFirstLastButtons
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 15]"
+    >
+    </mat-paginator>
+  </div>
+</div>
